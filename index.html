@@ -1,0 +1,3061 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Aventure Lecture - Méthode Calimots CP</title>
+    <!-- Icône vectorielle autonome intégrée directement au code (aucun fichier externe requis) -->
+    <link id="app-favicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%230284c7'/%3E%3C/linearGradient%3E%3ClinearGradient id='bird' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23fde047'/%3E%3Cstop offset='100%25' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='url(%23bg)'/%3E%3Ccircle cx='95' cy='95' r='16' fill='%23fde047'/%3E%3Ccircle cx='420' cy='105' r='14' fill='%23fde047'/%3E%3Ccircle cx='435' cy='210' r='10' fill='%23ffffff' opacity='0.8'/%3E%3Cellipse cx='256' cy='215' rx='105' ry='98' fill='url(%23bird)' stroke='%23b45309' stroke-width='8'/%3E%3Cpolygon points='175,140 155,95 205,125' fill='%23f59e0b' stroke='%23b45309' stroke-width='6' stroke-linejoin='round'/%3E%3Cpolygon points='337,140 357,95 307,125' fill='%23f59e0b' stroke='%23b45309' stroke-width='6' stroke-linejoin='round'/%3E%3Ccircle cx='215' cy='200' r='34' fill='%23ffffff' stroke='%231e293b' stroke-width='10'/%3E%3Ccircle cx='297' cy='200' r='34' fill='%23ffffff' stroke='%231e293b' stroke-width='10'/%3E%3Cline x1='249' y1='200' x2='263' y2='200' stroke='%231e293b' stroke-width='10'/%3E%3Ccircle cx='220' cy='200' r='15' fill='%230f172a'/%3E%3Ccircle cx='292' cy='200' r='15' fill='%230f172a'/%3E%3Ccircle cx='225' cy='194' r='5' fill='%23ffffff'/%3E%3Ccircle cx='297' cy='194' r='5' fill='%23ffffff'/%3E%3Cpolygon points='238,232 274,232 256,262' fill='%23ea580c' stroke='%239a3412' stroke-width='5' stroke-linejoin='round'/%3E%3Crect x='54' y='315' width='404' height='142' rx='36' fill='%23ffffff' opacity='0.95'/%3E%3Ctext x='125' y='422' font-family='Arial Rounded MT Bold, sans-serif' font-weight='900' font-size='112' text-anchor='middle' fill='%23ef4444'%3EA%3C/text%3E%3Ctext x='256' y='422' font-family='Arial Rounded MT Bold, sans-serif' font-weight='900' font-size='112' text-anchor='middle' fill='%232563eb'%3EL%3C/text%3E%3Ctext x='387' y='422' font-family='Arial Rounded MT Bold, sans-serif' font-weight='900' font-size='112' text-anchor='middle' fill='%2316a34a'%3EP%3C/text%3E%3C/svg%3E">
+    <link id="apple-touch-icon" rel="apple-touch-icon" href="">
+    <link id="pwa-manifest" rel="manifest" href="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Cali-Lecture">
+    <meta name="theme-color" content="#0284c7">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@600;800&family=Andika:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 100%);
+            user-select: none;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .font-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Mode Accessibilité / Dyslexie (Police Andika recommandée Éducation Nationale + espacement) */
+        body.dys-mode {
+            font-family: 'Andika', sans-serif !important;
+            background: #fdfbf7 !important;
+            letter-spacing: 0.08em;
+            word-spacing: 0.22em;
+            line-height: 1.75;
+        }
+        body.dys-mode h1, body.dys-mode h2, body.dys-mode h3, body.dys-mode .font-title {
+            font-family: 'Andika', sans-serif !important;
+            letter-spacing: 0.08em;
+        }
+        .syl-alt-0 { color: #1d4ed8; }
+        .syl-alt-1 { color: #b91c1c; }
+        
+        /* Animations ludiques */
+        @keyframes bounce-gentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-bounce-gentle {
+            animation: bounce-gentle 2s infinite ease-in-out;
+        }
+
+        @keyframes pop-in {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pop-in {
+            animation: pop-in 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Effet 3D boutons de jeu */
+        .btn-game {
+            transition: all 0.1s ease;
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
+        }
+        .btn-game:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        /* Codes couleurs pédagogiques (inspiration Calimots) */
+        .card-voyelle {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #b91c1c;
+        }
+        .card-consonne-longue {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+            color: #1d4ed8;
+        }
+        .card-consonne-courte {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+        .card-complexe {
+            background-color: #f3e8ff;
+            border-color: #a855f7;
+            color: #6b21a8;
+        }
+        /* Info-bulles interactives (survol PC + clic/appui tactile) - Format agrandi haute lisibilité */
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .tooltip-bubble {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.98rem;
+            font-weight: 700;
+            line-height: 1.45;
+            padding: 0.85rem 1.15rem;
+            border-radius: 1.15rem;
+            border: 2px solid #38bdf8;
+            width: max-content;
+            max-width: min(340px, 85vw);
+            text-align: center;
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.35);
+            z-index: 60;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+        }
+        .tooltip-bubble::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: #38bdf8 transparent transparent transparent;
+        }
+        .tooltip-wrapper:hover .tooltip-bubble,
+        .tooltip-wrapper.tooltip-open .tooltip-bubble {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        /* Variante info-bulle vers le bas (pour l'en-tête) */
+        .tooltip-bottom .tooltip-bubble {
+            bottom: auto;
+            top: calc(100% + 12px);
+        }
+        .tooltip-bottom .tooltip-bubble::after {
+            top: auto;
+            bottom: 100%;
+            border-color: transparent transparent #38bdf8 transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800">
+
+    <!-- EN-TÊTE : Progression et Score -->
+    <header class="bg-white/90 backdrop-blur-md shadow-md sticky top-0 z-20 px-4 py-3 border-b-4 border-amber-300">
+        <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <!-- Logo / Retour accueil -->
+            <button onclick="goHome()" class="flex items-center gap-2 text-left group">
+                <div class="w-11 h-11 bg-amber-400 rounded-2xl flex items-center justify-center text-2xl shadow-inner group-hover:scale-105 transition">
+                    🦉
+                </div>
+                <div>
+                    <h1 class="font-title text-xl sm:text-2xl font-bold text-amber-600 leading-tight">Cali-Lecture CP</h1>
+                    <p class="text-xs text-slate-500 font-bold hidden sm:block">Inspiré de la méthode Calimots • <span class="text-amber-700 font-extrabold">v2.6.3</span></p>
+                </div>
+            </button>
+
+            <!-- Indicateur d'étoiles & Niveau -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Profil actif -->
+                <div class="tooltip-wrapper tooltip-bottom">
+                    <button id="active-profile-btn" onclick="openProfileSelector()" class="hidden bg-emerald-100 hover:bg-emerald-200 text-emerald-800 border-2 border-emerald-300 px-3 py-1.5 rounded-full text-sm font-bold items-center gap-1.5 transition">
+                        <span id="header-avatar">🦊</span>
+                        <span id="header-name" class="max-w-[90px] truncate">Élève</span>
+                    </button>
+                    <div class="tooltip-bubble">Changer d'élève ou créer un nouveau profil sauvegardé</div>
+                </div>
+
+                <div class="tooltip-wrapper tooltip-bottom">
+                    <div id="header-stars-box" class="hidden bg-amber-100 border-2 border-amber-300 px-3 py-1.5 rounded-full items-center gap-1.5 font-title font-bold text-amber-700 cursor-help">
+                        <span class="text-lg">⭐</span>
+                        <span id="total-stars">0</span>
+                    </div>
+                    <div class="tooltip-bubble">Tes étoiles gagnées à chaque étape réussie !</div>
+                </div>
+
+                <div class="tooltip-wrapper tooltip-bottom">
+                    <button id="dys-toggle-btn" onclick="toggleDysMode()" class="bg-purple-100 hover:bg-purple-200 text-purple-800 border-2 border-purple-300 px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 transition">
+                        <span>👁️</span> <span class="hidden md:inline" id="dys-btn-label">Aide Dys</span>
+                    </button>
+                    <div class="tooltip-bubble">Active la police adaptée Andika, augmente l'espacement et colorie les syllabes</div>
+                </div>
+
+                <div class="tooltip-wrapper tooltip-bottom">
+                    <button id="install-pwa-btn" onclick="triggerPwaInstall()" class="hidden bg-emerald-500 hover:bg-emerald-600 text-white border-2 border-emerald-700 px-3 py-1.5 rounded-full text-sm font-bold items-center gap-1 transition shadow-sm">
+                        <span>📲</span> <span class="hidden sm:inline">Installer</span>
+                    </button>
+                    <div class="tooltip-bubble">Installer l'application sur ton ordinateur, tablette ou téléphone</div>
+                </div>
+
+                <div class="tooltip-wrapper tooltip-bottom">
+                    <button onclick="openHelpModal()" class="bg-amber-100 hover:bg-amber-200 text-amber-800 border-2 border-amber-300 px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 transition">
+                        <span>❓</span> <span class="hidden md:inline">Aide</span>
+                    </button>
+                    <div class="tooltip-bubble">Explication détaillée de tous les jeux et outils</div>
+                </div>
+
+                <div class="tooltip-wrapper tooltip-bottom">
+                    <button onclick="openGuideModal()" class="bg-sky-100 hover:bg-sky-200 text-sky-700 border-2 border-sky-300 px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1 transition">
+                        <span>📖</span> <span class="hidden lg:inline">Mémo & Gestes</span>
+                    </button>
+                    <div class="tooltip-bubble">Couleurs Calimots et gestes Borel-Maisonny</div>
+            <div class="flex items-center gap-2 text-left">
+                <div class="w-11 h-11 bg-amber-400 rounded-2xl flex items-center justify-center text-2xl shadow-inner group-hover:scale-105 transition">
+                    🦉
+                </div>
+                <div>
+                    <h1 class="font-title text-xl sm:text-2xl font-bold text-amber-600 leading-tight">Cali-Lecture CP</h1>
+                    <p class="text-xs text-slate-500 font-bold hidden sm:block">Inspiré de la méthode Calimots • <span class="text-amber-700 font-extrabold">v2.6.4</span></p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENEUR PRINCIPAL DU JEU -->
+    <main id="app-container" class="flex-grow max-w-4xl w-full mx-auto px-4 py-6 flex flex-col justify-center">
+        <!-- Le contenu dynamique est injecté ici -->
+    </main>
+
+    <!-- ZONE DE FEEDBACK FLOTTANTE (TOAST) -->
+    <div id="toast-feedback" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4">
+        <div id="toast-content" class="px-6 py-3 rounded-2xl shadow-xl font-title text-lg font-bold text-white flex items-center gap-3">
+        </div>
+    </div>
+
+    <!-- MODALE GUIDE MÉMO & GESTES BOREL-MAISONNY -->
+    <div id="guide-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-4 border-sky-300 max-h-[90vh] overflow-y-auto pop-in">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-title text-2xl font-bold text-sky-700">📖 Mémo & Gestes Borel-Maisonny</h2>
+                <button onclick="closeGuideModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 font-bold text-slate-600">✕</button>
+            </div>
+            <p class="text-sm text-slate-600 mb-4">Dans la méthode <strong>Calimots</strong>, on associe les <strong>codes couleurs</strong> et les <strong>gestes Borel-Maisonny</strong> :</p>
+
+            <div class="space-y-3">
+                <div class="p-3 rounded-2xl border-2 card-voyelle">
+                    <div class="font-title font-bold text-lg flex items-center gap-2">
+                        <span>🔴</span> Les Voyelles (a, e, i, o, u, é)
+                    </div>
+                    <p class="text-sm mt-1">Elles chantent bouche ouverte ! Chaque voyelle a son geste Borel-Maisonny.</p>
+                </div>
+
+                <div class="p-3 rounded-2xl border-2 card-consonne-longue">
+                    <div class="font-title font-bold text-lg flex items-center gap-2">
+                        <span>🔵</span> Les Consonnes Longues (f, l, m, n, r, s, v, ch)
+                    </div>
+                    <p class="text-sm mt-1">Leur son dure longtemps (« fff », « sss », « rrr »...) : faciles pour glisser vers la voyelle !</p>
+                </div>
+
+                <div class="p-3 rounded-2xl border-2 card-consonne-courte">
+                    <div class="font-title font-bold text-lg flex items-center gap-2">
+                        <span>🟢</span> Les Consonnes Courtes (p, t, c/k, b, d)
+                    </div>
+                    <p class="text-sm mt-1">Leur son est une petite explosion rapide (« p ! », « t ! », « b ! »).</p>
+                </div>
+
+                <div class="p-3 rounded-2xl border-2 bg-purple-100 border-purple-400 text-purple-900">
+                    <div class="font-title font-bold text-lg flex items-center gap-2">
+                        <span>🟣</span> Les Sons Complexes (ou, on, oi, an, in)
+                    </div>
+                    <p class="text-sm mt-1">Deux lettres qui se donnent la main pour fabriquer un tout nouveau son !</p>
+                </div>
+            </div>
+
+            <button onclick="closeGuideModal()" class="mt-6 w-full py-3 bg-sky-500 hover:bg-sky-600 text-white font-title font-bold text-lg rounded-2xl btn-game">
+                J'ai compris !
+            </button>
+        </div>
+    </div>
+
+    <!-- MODALE D'AIDE COMPLÈTE DES JEUX ET FONCTIONS -->
+    <div id="help-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border-4 border-amber-300 max-h-[90vh] overflow-y-auto pop-in">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-amber-100">
+                <div class="flex items-center gap-2">
+                    <span class="text-3xl">🦉</span>
+                    <div>
+                        <h2 class="font-title text-2xl font-bold text-amber-700">Guide d'aide : Comment fonctionnent les jeux ?</h2>
+                        <p class="text-xs text-slate-500 font-bold">Tout comprendre pour accompagner l'enfant en CP</p>
+                    </div>
+                </div>
+                <button onclick="closeHelpModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 font-bold text-slate-600">✕</button>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-700">
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4">
+                    <h3 class="font-title font-bold text-base text-amber-900 mb-1">🎯 Principe général de progression</h3>
+                    <p>L'élève avance à son rythme à travers <strong>10 étapes progressives</strong>. Chaque étape réussie rapporte jusqu'à <strong>3 étoiles ⭐</strong> et débloque automatiquement l'étape suivante. Tu peux cliquer sur les petits boutons <strong>ⓘ</strong> partout dans l'application pour afficher une info-bulle explicative.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="p-3.5 rounded-2xl border-2 border-orange-200 bg-orange-50/70">
+                        <div class="font-title font-bold text-orange-800">👂 Étape 1 : Conscience phonologique</div>
+                        <p class="text-xs mt-1">L'enfant écoute un mot et frappe dans ses mains pour compter le nombre de syllabes orales (ex : <em>to-ma-te</em> = 3 syllabes).</p>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl border-2 border-red-200 bg-red-50/70">
+                        <div class="font-title font-bold text-red-800">🔴🔵🟢🟣 Étapes 2, 3, 5, 7 : Les Sons</div>
+                        <p class="text-xs mt-1">Écoute le son prononcé, observe le <strong>geste Borel-Maisonny</strong> en indice et clique sur la bonne lettre ou le bon digramme.</p>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl border-2 border-indigo-200 bg-indigo-50/70">
+                        <div class="font-title font-bold text-indigo-800">🧩 Étapes 4 & 6 : Fusion syllabique</div>
+                        <p class="text-xs mt-1">Fais glisser la consonne avec la voyelle (ex : <em>lll + a → la</em>) pour lire et reconnaître la syllabe formée.</p>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl border-2 border-amber-200 bg-amber-50/70">
+                        <div class="font-title font-bold text-amber-800">🏗️ Étape 8 : La Fabrique de Mots</div>
+                        <p class="text-xs mt-1">Observe l'image, écoute le mot entier et clique sur les étiquettes-syllabes dans le bon ordre pour reconstruire le mot.</p>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl border-2 border-cyan-200 bg-cyan-50/70">
+                        <div class="font-title font-bold text-cyan-800">🔑 Étape 9 : Les Mots-Outils CP</div>
+                        <p class="text-xs mt-1">Mémorise les petits mots très fréquents (<em>dans, avec, sur, est, les...</em>) indispensables pour lire des phrases.</p>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl border-2 border-rose-200 bg-rose-50/70">
+                        <div class="font-title font-bold text-rose-800">🏆 Étape 10 & Défi Fluence 1 min</div>
+                        <p class="text-xs mt-1">Lis une phrase complète et choisis l'illustration correspondante, ou relève le défi chrono d'1 minute pour gagner en rapidité !</p>
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 border-2 border-purple-200 rounded-2xl p-4 space-y-1">
+                    <div class="font-title font-bold text-base text-purple-900">👁️ Outils d'accessibilité & Atelier Spécial Dys</div>
+                    <p class="text-xs">Le bouton <strong>Aide Dys</strong> active la police <em>Andika</em>, espace les lettres et colorie les syllabes en bleu/rouge. L'<strong>Atelier Spécial Dys</strong> propose des exercices ciblés sur les confusions visuelles (<em>b/d, p/q</em>), auditives (<em>p/b, t/d, f/v</em>) et les inversions (<em>al/la, or/ro</em>).</p>
+                </div>
+            </div>
+
+            <button onclick="closeHelpModal()" class="mt-5 w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-title font-bold text-lg rounded-2xl btn-game">
+                C'est très clair, merci !
+            </button>
+        </div>
+    </div>
+
+    <!-- MODALE ESPACE ENSEIGNANT / ADMINISTRATEUR -->
+    <div id="admin-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-40 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border-4 border-slate-700 max-h-[90vh] overflow-y-auto pop-in">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="text-3xl">👩‍🏫</span>
+                    <div>
+                        <h2 class="font-title text-2xl font-bold text-slate-800">Espace Enseignant & Admin <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full align-middle">v2.6.4</span></h2>
+                        <p class="text-xs text-slate-500 font-bold" id="admin-active-student-label">Aucun élève sélectionné</p>
+                    </div>
+                </div>
+                <button onclick="closeAdminModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 font-bold text-slate-600">✕</button>
+            </div>
+
+            <!-- Onglets Admin -->
+            <div class="flex flex-wrap gap-2 mb-5 bg-slate-100 p-1.5 rounded-2xl">
+                <button id="tab-btn-levels" onclick="switchAdminTab('levels')" class="flex-1 py-2 px-3 rounded-xl font-title font-bold text-sm bg-white text-slate-800 shadow transition">
+                    🗺️ Choix des Niveaux
+                </button>
+                <button id="tab-btn-custom" onclick="switchAdminTab('custom')" class="flex-1 py-2 px-3 rounded-xl font-title font-bold text-sm text-slate-600 hover:text-slate-800 transition">
+                    🎯 Mode Libre Enseignant
+                </button>
+                <button id="tab-btn-audio" onclick="switchAdminTab('audio')" class="flex-1 py-2 px-3 rounded-xl font-title font-bold text-sm text-slate-600 hover:text-slate-800 transition">
+                    🎙️ Mes Sons MP3
+                </button>
+            </div>
+
+            <!-- ONGLET 1 : GESTION / CHOIX DES NIVEAUX -->
+            <div id="admin-tab-levels" class="space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 bg-amber-50 p-3 rounded-2xl border border-amber-200">
+                    <span class="text-sm font-bold text-amber-900">Débloquer tout le parcours pour cet élève :</span>
+                    <button onclick="unlockAllLevelsForActiveProfile()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-2 rounded-xl btn-game">
+                        🔓 Tout débloquer (Étapes 1 à 8)
+                    </button>
+                </div>
+
+                <div id="admin-levels-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <!-- Rempli dynamiquement -->
+                </div>
+            </div>
+
+            <!-- ONGLET 2 : MODE LIBRE ENSEIGNANT (SÉLECTION DE LETTRES / SONS) -->
+            <div id="admin-tab-custom" class="hidden space-y-4">
+                <p class="text-sm text-slate-600">
+                    Sélectionnez les <strong>lettres ou sons</strong> que l'élève doit reconnaître (minimum 2 sons). L'exercice portera uniquement sur votre sélection :
+                </p>
+
+                <!-- Raccourcis de sélection -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="selectCustomPreset('P1')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 hover:bg-amber-200">+ Période 1</button>
+                    <button onclick="selectCustomPreset('P2')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 hover:bg-amber-200">+ Période 2</button>
+                    <button onclick="selectCustomPreset('P3')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 hover:bg-amber-200">+ Période 3</button>
+                    <button onclick="selectCustomPreset('P4')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 hover:bg-amber-200">+ Période 4</button>
+                    <button onclick="selectCustomPreset('P5')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 hover:bg-amber-200">+ Période 5</button>
+                    <button onclick="selectCustomPreset('voyelles')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-red-100 text-red-800 hover:bg-red-200">+ Voyelles</button>
+                    <button onclick="selectCustomPreset('longues')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-blue-100 text-blue-800 hover:bg-blue-200">+ Consonnes longues</button>
+                    <button onclick="selectCustomPreset('courtes')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-green-100 text-green-800 hover:bg-green-200">+ Consonnes courtes</button>
+                    <button onclick="selectCustomPreset('complexes')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-purple-100 text-purple-800 hover:bg-purple-200">+ Sons complexes</button>
+                    <button onclick="selectCustomPreset('clear')" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300">Tout effacer</button>
+                </div>
+
+                <!-- Grille de sélection des phonèmes -->
+                <div id="admin-phonemes-grid" class="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-60 overflow-y-auto p-1">
+                    <!-- Rempli dynamiquement -->
+                </div>
+
+                <!-- Options de session -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+                    <label class="flex items-center gap-2 text-sm font-bold text-slate-700">
+                        <input type="checkbox" id="custom-show-gesture" checked class="w-4 h-4 rounded text-sky-600">
+                        Afficher l'indice geste Borel-Maisonny
+                    </label>
+                    <div class="flex items-center gap-2 text-sm font-bold text-slate-700">
+                        <span>Questions :</span>
+                        <select id="custom-questions-count" class="border-2 border-slate-200 rounded-xl px-2 py-1 font-bold">
+                            <option value="5">5</option>
+                            <option value="8" selected>8</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="launchCustomTeacherSession()" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-title font-bold text-lg rounded-2xl btn-game">
+                    🚀 Lancer l'exercice personnalisé (<span id="custom-selected-count">0</span> sons)
+                </button>
+            </div>
+
+            <!-- ONGLET 3 : GESTION DES ENREGISTREMENTS MP3 (GITHUB / LOCAL) -->
+            <div id="admin-tab-audio" class="hidden space-y-4">
+                <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 text-sm text-sky-900 space-y-2">
+                    <div class="font-title font-bold text-base flex items-center gap-2">
+                        <span>📂</span> Comment utiliser vos propres MP3 sur GitHub ?
+                    </div>
+                    <p>
+                        Créez un dossier nommé <code class="bg-white px-1.5 py-0.5 rounded font-bold border border-sky-200">audio/</code> à côté de votre fichier <code class="bg-white px-1.5 py-0.5 rounded font-bold border border-sky-200">index.html</code> sur GitHub et déposez-y vos fichiers (ex : <code class="bg-white px-1.5 py-0.5 rounded font-bold">a.mp3</code>, <code class="bg-white px-1.5 py-0.5 rounded font-bold">b.mp3</code>, <code class="bg-white px-1.5 py-0.5 rounded font-bold">ch.mp3</code>...).
+                    </p>
+                    <p class="text-xs text-sky-700">
+                        💡 Si un fichier MP3 est absent, l'application utilise automatiquement la voix de synthèse en secours.
+                    </p>
+                </div>
+
+                <!-- Test rapide depuis l'ordinateur -->
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2">
+                    <div class="text-xs font-bold text-amber-900">
+                        🧪 Tester des fichiers MP3 (sons ou syllabes) depuis votre ordinateur :
+                    </div>
+                    <label class="cursor-pointer bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-2 rounded-xl btn-game">
+                        📁 Importer des MP3 locaux
+                        <input type="file" accept="audio/mp3,audio/mpeg,audio/*" multiple onchange="handleLocalMp3Upload(event)" class="hidden">
+                    </label>
+                </div>
+
+                <!-- Filtre Phonèmes / Syllabes -->
+                <div class="flex gap-2 bg-slate-100 p-1 rounded-xl">
+                    <button type="button" id="audio-subtab-phonemes" onclick="switchAudioSubTab('phonemes')" class="flex-1 py-1.5 px-3 rounded-lg font-title font-bold text-xs bg-white text-slate-800 shadow transition">
+                        🔤 Sons & Graphèmes
+                    </button>
+                    <button type="button" id="audio-subtab-syllables" onclick="switchAudioSubTab('syllables')" class="flex-1 py-1.5 px-3 rounded-lg font-title font-bold text-xs text-slate-600 hover:text-slate-800 transition">
+                        🧩 Toutes les Syllabes du jeu
+                    </button>
+                </div>
+
+                <!-- Liste des fichiers attendus -->
+                <div id="admin-audio-list" class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-64 overflow-y-auto p-1">
+                    <!-- Rempli dynamiquement -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * VERSION DE L'APPLICATION & BASE DE DONNÉES PÉDAGOGIQUE (CALIMOTS CP & GESTES BOREL-MAISONNY)
+         */
+        const APP_VERSION = 'v2.6.4';
+
+        const PERIODS_CP = [
+            {
+                id: 'P1',
+                title: 'Période 1 (Sept. - Oct.)',
+                subtitle: 'Voyelles & premières consonnes longues',
+                graphemesLabel: 'a, i, o, u, e, é, l, r, m, s',
+                color: 'border-amber-400 bg-amber-50 text-amber-900',
+                badgeBg: 'bg-amber-500 text-white',
+                syllables: ['la', 'li', 'lo', 'lu', 'lé', 'ra', 'ri', 'ro', 'ru', 'ma', 'mi', 'mo', 'mu', 'sa', 'si', 'so', 'su'],
+                words: ['lune', 'moto', 'sofa', 'ami', 'rat', 'lit', 'mur', 'sac', 'rivière', 'salade']
+            },
+            {
+                id: 'P2',
+                title: 'Période 2 (Nov. - Déc.)',
+                subtitle: 'Consonnes longues & premières courtes',
+                graphemesLabel: 'f, v, ch, n, j, z, p, t, c (k)',
+                color: 'border-sky-400 bg-sky-50 text-sky-900',
+                badgeBg: 'bg-sky-500 text-white',
+                syllables: ['fa', 'fi', 'va', 'vi', 'cha', 'chu', 'na', 'ni', 'ja', 'jo', 'pa', 'pi', 'po', 'ta', 'ti', 'to', 'ca', 'co'],
+                words: ['vélo', 'chat', 'tomate', 'fusée', 'pirate', 'canapé', 'lavabo', 'cheval', 'fée', 'épée']
+            },
+            {
+                id: 'P3',
+                title: 'Période 3 (Janv. - Févr.)',
+                subtitle: 'Consonnes sonores & premiers digrammes',
+                graphemesLabel: 'b, d, g, ou, on/om, oi, an/am, en/em',
+                color: 'border-emerald-400 bg-emerald-50 text-emerald-900',
+                badgeBg: 'bg-emerald-500 text-white',
+                syllables: ['ba', 'bi', 'bo', 'da', 'di', 'do', 'ga', 'go', 'lou', 'pou', 'mon', 'ton', 'roi', 'toi', 'dan', 'ven'],
+                words: ['banane', 'domino', 'mouton', 'poule', 'souris', 'tortue', 'ballon', 'cochon', 'poisson', 'maison']
+            },
+            {
+                id: 'P4',
+                title: 'Période 4 (Mars - Avril)',
+                subtitle: 'Sons complexes fréquents & accents',
+                graphemesLabel: 'è, ê, ai, ei, in/im, au, eau, eu/œu, qu, gu',
+                color: 'border-purple-400 bg-purple-50 text-purple-900',
+                badgeBg: 'bg-purple-500 text-white',
+                syllables: ['lai', 'mai', 'pin', 'lin', 'bau', 'mau', 'beau', 'seau', 'feu', 'bleu', 'qui', 'que', 'gui', 'gue'],
+                words: ['lapin', 'sapin', 'bateau', 'chapeau', 'cadeau', 'fleur', 'maison', 'guitare', 'requin', 'forêt']
+            },
+            {
+                id: 'P5',
+                title: 'Période 5 (Mai - Juin)',
+                subtitle: 'Graphèmes avancés de fin de CP',
+                graphemesLabel: 'gn, ill / y, oin, ien, ph, er / ez, c=s, g=j',
+                color: 'border-rose-400 bg-rose-50 text-rose-900',
+                badgeBg: 'bg-rose-500 text-white',
+                syllables: ['gna', 'gno', 'ille', 'ya', 'foin', 'loin', 'bien', 'rien', 'lien', 'chien', 'pha', 'pho', 'ler', 'nez', 'ce', 'ci', 'ge', 'gi'],
+                words: ['montagne', 'papillon', 'éléphant', 'téléphone', 'foin', 'chien', 'indien', 'citron', 'girafe', 'bougie', 'nez', 'cahier']
+            }
+        ];
+
+        const PHONEMES = [
+            // PÉRIODE 1 : Voyelles & premières consonnes longues
+            { id: 'a', grapheme: 'a', period: 'P1', category: 'voyelle', tts: 'a', gestureIcon: '🖐️', gestureText: 'Main ouverte à côté du visage, paume en avant' },
+            { id: 'i', grapheme: 'i', period: 'P1', category: 'voyelle', tts: 'i', gestureIcon: '☝️', gestureText: 'Index levé bien droit vers le haut' },
+            { id: 'o', grapheme: 'o', period: 'P1', category: 'voyelle', tts: 'o', gestureIcon: '👌', gestureText: 'Pouce et index formant un rond devant la bouche' },
+            { id: 'u', grapheme: 'u', period: 'P1', category: 'voyelle', tts: 'u', gestureIcon: '✌️', gestureText: 'Deux doigts levés vers le haut (en V)' },
+            { id: 'e', grapheme: 'e', period: 'P1', category: 'voyelle', tts: 'euh', gestureIcon: '✊', gestureText: 'Poing fermé devant la poitrine' },
+            { id: 'é', grapheme: 'é', period: 'P1', category: 'voyelle', tts: 'é', gestureIcon: '↗️', gestureText: 'Main qui monte obliquement depuis la bouche' },
+            { id: 'l', grapheme: 'l', period: 'P1', category: 'consonne-longue', tts: 'lll', gestureIcon: '☝️', gestureText: 'Index levé le long de la joue (comme la langue qui monte)' },
+            { id: 'r', grapheme: 'r', period: 'P1', category: 'consonne-longue', tts: 'rrr', gestureIcon: '🤏', gestureText: 'Main près de la gorge qui vibre doucement' },
+            { id: 'm', grapheme: 'm', period: 'P1', category: 'consonne-longue', tts: 'mmm', gestureIcon: '🤟', gestureText: 'Trois doigts posés vers le bas sur la joue' },
+            { id: 's', grapheme: 's', period: 'P1', category: 'consonne-longue', tts: 'sss', gestureIcon: '🐍', gestureText: 'Index qui ondule comme un serpent qui siffle' },
+
+            // PÉRIODE 2 : Suite des consonnes longues + premières consonnes courtes
+            { id: 'f', grapheme: 'f', period: 'P2', category: 'consonne-longue', tts: 'fff', gestureIcon: '🌬️', gestureText: 'Main devant la bouche qui souffle doucement' },
+            { id: 'v', grapheme: 'v', period: 'P2', category: 'consonne-longue', tts: 'vvv', gestureIcon: '✌️', gestureText: 'Deux doigts vibrants près de la lèvre inférieure' },
+            { id: 'ch', grapheme: 'ch', period: 'P2', category: 'consonne-longue', tts: 'chhh', gestureIcon: '🤫', gestureText: 'Index vertical devant les lèvres (« chut ! »)' },
+            { id: 'n', grapheme: 'n', period: 'P2', category: 'consonne-longue', tts: 'nnn', gestureIcon: '✌️', gestureText: 'Deux doigts posés sur l’aile du nez' },
+            { id: 'j', grapheme: 'j', period: 'P2', category: 'consonne-longue', tts: 'jjj', gestureIcon: '👆', gestureText: 'Index posé sur la joue qui vibre doucement' },
+            { id: 'z', grapheme: 'z', period: 'P2', category: 'consonne-longue', tts: 'zzz', gestureIcon: '🐝', gestureText: 'Index qui zigzague comme une abeille' },
+            { id: 'p', grapheme: 'p', period: 'P2', category: 'consonne-courte', tts: 'peu', gestureIcon: '💥', gestureText: 'Doigts fermés qui s’ouvrent d’un coup sec devant la bouche' },
+            { id: 't', grapheme: 't', period: 'P2', category: 'consonne-courte', tts: 'teu', gestureIcon: '👆', gestureText: 'Index qui tape vivement devant le front' },
+            { id: 'c', grapheme: 'c (k)', period: 'P2', category: 'consonne-courte', tts: 'keu', gestureIcon: '🤏', gestureText: 'Index et pouce qui claquent près du cou' },
+
+            // PÉRIODE 3 : Consonnes sonores + premiers digrammes
+            { id: 'b', grapheme: 'b', period: 'P3', category: 'consonne-courte', tts: 'beu', gestureIcon: '✊', gestureText: 'Poing fermé qui rebondit légèrement près de la joue' },
+            { id: 'd', grapheme: 'd', period: 'P3', category: 'consonne-courte', tts: 'deu', gestureIcon: '👉', gestureText: 'Index pointé qui avance d’un coup sec' },
+            { id: 'g', grapheme: 'g', period: 'P3', category: 'consonne-courte', tts: 'gueu', gestureIcon: '🤏', gestureText: 'Main sous le menton qui accompagne le son de gorge' },
+            { id: 'ou', grapheme: 'ou', period: 'P3', category: 'complexe', tts: 'ou', gestureIcon: '🐺', gestureText: 'Deux mains en porte-voix devant la bouche' },
+            { id: 'on', grapheme: 'on / om', period: 'P3', category: 'complexe', tts: 'on', gestureIcon: '👃', gestureText: 'Index posé sur le côté du nez (son nasal)' },
+            { id: 'oi', grapheme: 'oi', period: 'P3', category: 'complexe', tts: 'oi', gestureIcon: '👋', gestureText: 'Main ouverte qui pivote devant le menton' },
+            { id: 'an', grapheme: 'an / am', period: 'P3', category: 'complexe', tts: 'an', gestureIcon: '🖐️', gestureText: 'Main ouverte près du nez et de la bouche' },
+            { id: 'en', grapheme: 'en / em', period: 'P3', category: 'complexe', tts: 'an', gestureIcon: '🖐️', gestureText: 'Même geste nasal que « an » devant le visage' },
+
+            // PÉRIODE 4 : Sons complexes fréquents & accents
+            { id: 'è', grapheme: 'è / ê', period: 'P4', category: 'voyelle', tts: 'è', gestureIcon: '↘️', gestureText: 'Main qui descend obliquement depuis la bouche' },
+            { id: 'ai', grapheme: 'ai / ei', period: 'P4', category: 'complexe', tts: 'è', gestureIcon: '↘️', gestureText: 'Même son ouvert que « è », main qui descend' },
+            { id: 'in', grapheme: 'in / im', period: 'P4', category: 'complexe', tts: 'in', gestureIcon: '☝️', gestureText: 'Index pointé près du nez en souriant' },
+            { id: 'au', grapheme: 'au / eau', period: 'P4', category: 'complexe', tts: 'o', gestureIcon: '👌', gestureText: 'Pouce et index en rond comme le son « o »' },
+            { id: 'eu', grapheme: 'eu / œu', period: 'P4', category: 'complexe', tts: 'euh', gestureIcon: '✊', gestureText: 'Poing fermé qui avance légèrement devant la bouche' },
+            { id: 'qu', grapheme: 'qu', period: 'P4', category: 'consonne-courte', tts: 'keu', gestureIcon: '🤏', gestureText: 'Claquement des doigts près du cou (son [k])' },
+            { id: 'gu', grapheme: 'gu', period: 'P4', category: 'consonne-courte', tts: 'gueu', gestureIcon: '🤏', gestureText: 'Main sous le menton devant e ou i (son [g])' },
+
+            // PÉRIODE 5 : Graphèmes avancés de fin de CP
+            { id: 'gn', grapheme: 'gn', period: 'P5', category: 'complexe', tts: 'gne', gestureIcon: '👃', gestureText: 'Index qui glisse sur le côté du nez (comme montagne)' },
+            { id: 'ill', grapheme: 'ill / y', period: 'P5', category: 'complexe', tts: 'ille', gestureIcon: '✌️', gestureText: 'Deux doigts qui glissent vers le haut en souriant' },
+            { id: 'oin', grapheme: 'oin', period: 'P5', category: 'complexe', tts: 'oin', gestureIcon: '👋', gestureText: 'Main qui pivote puis index près du nez' },
+            { id: 'ien', grapheme: 'ien', period: 'P5', category: 'complexe', tts: 'ien', gestureIcon: '🐶', gestureText: 'Index levé qui glisse vers le nez (comme chien, bien, rien)' },
+            { id: 'ph', grapheme: 'ph', period: 'P5', category: 'consonne-longue', tts: 'fff', gestureIcon: '🌬️', gestureText: 'Souffle doux devant la bouche (comme « f »)' },
+            { id: 'er', grapheme: 'er / ez', period: 'P5', category: 'complexe', tts: 'é', gestureIcon: '↗️', gestureText: 'Main qui monte en fin de mot (comme « é »)' },
+            { id: 'ce', grapheme: 'c (s) / ç', period: 'P5', category: 'consonne-longue', tts: 'sss', gestureIcon: '🐍', gestureText: 'Serpent qui siffle devant e, i, y ou avec cédille' }
+        ];
+
+        const SYLLABLES_LONG = [
+            { text: 'la', c: 'l', v: 'a', tts: 'la' },
+            { text: 'li', c: 'l', v: 'i', tts: 'li' },
+            { text: 'lo', c: 'l', v: 'o', tts: 'lo' },
+            { text: 'lu', c: 'l', v: 'u', tts: 'lu' },
+            { text: 'ma', c: 'm', v: 'a', tts: 'ma' },
+            { text: 'mi', c: 'm', v: 'i', tts: 'mi' },
+            { text: 'mo', c: 'm', v: 'o', tts: 'mo' },
+            { text: 'ra', c: 'r', v: 'a', tts: 'ra' },
+            { text: 'ri', c: 'r', v: 'i', tts: 'ri' },
+            { text: 'ro', c: 'r', v: 'o', tts: 'ro' },
+            { text: 'sa', c: 's', v: 'a', tts: 'sa' },
+            { text: 'si', c: 's', v: 'i', tts: 'si' },
+            { text: 'fa', c: 'f', v: 'a', tts: 'fa' },
+            { text: 'fi', c: 'f', v: 'i', tts: 'fi' },
+            { text: 'cha', c: 'ch', v: 'a', tts: 'cha' },
+            { text: 'chu', c: 'ch', v: 'u', tts: 'chu' }
+        ];
+
+        const SYLLABLES_SHORT = [
+            { text: 'pa', c: 'p', v: 'a', tts: 'pa' },
+            { text: 'pi', c: 'p', v: 'i', tts: 'pi' },
+            { text: 'po', c: 'p', v: 'o', tts: 'po' },
+            { text: 'ta', c: 't', v: 'a', tts: 'ta' },
+            { text: 'ti', c: 't', v: 'i', tts: 'ti' },
+            { text: 'to', c: 't', v: 'o', tts: 'to' },
+            { text: 'ba', c: 'b', v: 'a', tts: 'ba' },
+            { text: 'bi', c: 'b', v: 'i', tts: 'bi' },
+            { text: 'bo', c: 'b', v: 'o', tts: 'bo' },
+            { text: 'da', c: 'd', v: 'a', tts: 'da' },
+            { text: 'di', c: 'd', v: 'i', tts: 'di' },
+            { text: 'ca', c: 'c', v: 'a', tts: 'ka' },
+            { text: 'co', c: 'c', v: 'o', tts: 'ko' }
+        ];
+
+        const WORDS_TO_BUILD = [
+            { word: 'lune', emoji: '🌙', syllables: ['lu', 'ne'], distractors: ['ma', 'to'] },
+            { word: 'moto', emoji: '🏍️', syllables: ['mo', 'to'], distractors: ['la', 'pi'] },
+            { word: 'sofa', emoji: '🛋️', syllables: ['so', 'fa'], distractors: ['ri', 'bu'] },
+            { word: 'chat', emoji: '🐱', syllables: ['cha', 't'], distractors: ['lo', 'mi'] },
+            { word: 'vélo', emoji: '🚲', syllables: ['vé', 'lo'], distractors: ['pa', 'su'] },
+            { word: 'tomate', emoji: '🍅', syllables: ['to', 'ma', 'te'], distractors: ['li', 'pu'] },
+            { word: 'lavabo', emoji: '🚰', syllables: ['la', 'va', 'bo'], distractors: ['ri', 'tu'] },
+            { word: 'mouton', emoji: '🐑', syllables: ['mou', 'ton'], distractors: ['la', 'pi'] },
+            { word: 'lapin', emoji: '🐰', syllables: ['la', 'pin'], distractors: ['mo', 'su'] },
+            { word: 'sapin', emoji: '🌲', syllables: ['sa', 'pin'], distractors: ['to', 'lu'] },
+            { word: 'banane', emoji: '🍌', syllables: ['ba', 'na', 'ne'], distractors: ['ro', 'pi'] },
+            { word: 'pirate', emoji: '🏴‍☠️', syllables: ['pi', 'ra', 'te'], distractors: ['lo', 'mu'] },
+            { word: 'salade', emoji: '🥗', syllables: ['sa', 'la', 'de'], distractors: ['to', 'bi'] },
+            { word: 'canapé', emoji: '🛋️', syllables: ['ca', 'na', 'pé'], distractors: ['lu', 'mi'] },
+            { word: 'domino', emoji: '🁣', syllables: ['do', 'mi', 'no'], distractors: ['ra', 'su'] },
+            { word: 'numéro', emoji: '🔢', syllables: ['nu', 'mé', 'ro'], distractors: ['pa', 'li'] },
+            { word: 'fusée', emoji: '🚀', syllables: ['fu', 'sée'], distractors: ['mo', 'ta'] },
+            { word: 'épée', emoji: '⚔️', syllables: ['é', 'pée'], distractors: ['lu', 'ro'] },
+            { word: 'fée', emoji: '🧚', syllables: ['fée'], distractors: ['ma', 'to', 'li'] },
+            { word: 'île', emoji: '🏝️', syllables: ['î', 'le'], distractors: ['pa', 'su'] },
+            { word: 'âne', emoji: '🫏', syllables: ['â', 'ne'], distractors: ['mo', 'ri'] },
+            { word: 'poule', emoji: '🐔', syllables: ['pou', 'le'], distractors: ['ta', 'mi'] },
+            { word: 'souris', emoji: '🐭', syllables: ['sou', 'ris'], distractors: ['la', 'po'] },
+            { word: 'tortue', emoji: '🐢', syllables: ['tor', 'tue'], distractors: ['mi', 'la'] },
+            { word: 'fourmi', emoji: '🐜', syllables: ['four', 'mi'], distractors: ['pa', 'lo'] },
+            { word: 'poisson', emoji: '🐟', syllables: ['pois', 'son'], distractors: ['ta', 'lu'] },
+            { word: 'maison', emoji: '🏠', syllables: ['mai', 'son'], distractors: ['ro', 'pi'] },
+            { word: 'cheval', emoji: '🐴', syllables: ['che', 'val'], distractors: ['mo', 'ti'] },
+            { word: 'chien', emoji: '🐶', syllables: ['ch', 'ien'], distractors: ['ma', 'to'] },
+            { word: 'indien', emoji: '🪶', syllables: ['in', 'dien'], distractors: ['lo', 'pa'] },
+            { word: 'robot', emoji: '🤖', syllables: ['ro', 'bot'], distractors: ['mi', 'la'] },
+            { word: 'camion', emoji: '🚚', syllables: ['ca', 'mion'], distractors: ['po', 'ti'] },
+            { word: 'ballon', emoji: '⚽', syllables: ['bal', 'lon'], distractors: ['su', 'ra'] },
+            { word: 'cochon', emoji: '🐷', syllables: ['co', 'chon'], distractors: ['li', 'mu'] },
+            { word: 'girafe', emoji: '🦒', syllables: ['gi', 'ra', 'fe'], distractors: ['to', 'pu'] },
+            { word: 'citron', emoji: '🍋', syllables: ['ci', 'tron'], distractors: ['ma', 'lo'] },
+            { word: 'bateau', emoji: '⛵', syllables: ['ba', 'teau'], distractors: ['ri', 'su'] },
+            { word: 'chapeau', emoji: '🎩', syllables: ['cha', 'peau'], distractors: ['lo', 'mi'] },
+            { word: 'cadeau', emoji: '🎁', syllables: ['ca', 'deau'], distractors: ['tu', 'pa'] },
+            { word: 'nuage', emoji: '☁️', syllables: ['nu', 'a', 'ge'], distractors: ['ro', 'li'] },
+            { word: 'soleil', emoji: '☀️', syllables: ['so', 'leil'], distractors: ['ma', 'ti'] },
+            { word: 'école', emoji: '🏫', syllables: ['é', 'co', 'le'], distractors: ['pu', 'ra'] },
+            { word: 'farine', emoji: '🌾', syllables: ['fa', 'ri', 'ne'], distractors: ['lo', 'tu'] },
+            { word: 'tulipe', emoji: '🌷', syllables: ['tu', 'li', 'pe'], distractors: ['mo', 'sa'] },
+            { word: 'carotte', emoji: '🥕', syllables: ['ca', 'rot', 'te'], distractors: ['lu', 'pi'] },
+            { word: 'chemise', emoji: '👕', syllables: ['che', 'mi', 'se'], distractors: ['to', 'ra'] },
+            { word: 'valise', emoji: '🧳', syllables: ['va', 'li', 'se'], distractors: ['po', 'mu'] },
+            { word: 'méduse', emoji: '🪼', syllables: ['mé', 'du', 'se'], distractors: ['la', 'ti'] }
+        ];
+
+        // Banque pour le jeu "L'Intrus Sonore" (discrimination phonémique initiale)
+        const INTRUDER_SETS = [
+            { soundLabel: 'le son [m]', targetPhoneme: 'm', items: [
+                { word: 'mouton', emoji: '🐑', isIntruder: false },
+                { word: 'moto', emoji: '🏍️', isIntruder: false },
+                { word: 'maison', emoji: '🏠', isIntruder: false },
+                { word: 'lapin', emoji: '🐰', isIntruder: true }
+            ]},
+            { soundLabel: 'le son [l]', targetPhoneme: 'l', items: [
+                { word: 'lune', emoji: '🌙', isIntruder: false },
+                { word: 'lavabo', emoji: '🚰', isIntruder: false },
+                { word: 'lion', emoji: '🦁', isIntruder: false },
+                { word: 'tomate', emoji: '🍅', isIntruder: true }
+            ]},
+            { soundLabel: 'le son [s]', targetPhoneme: 's', items: [
+                { word: 'soleil', emoji: '☀️', isIntruder: false },
+                { word: 'souris', emoji: '🐭', isIntruder: false },
+                { word: 'salade', emoji: '🥗', isIntruder: false },
+                { word: 'banane', emoji: '🍌', isIntruder: true }
+            ]},
+            { soundLabel: 'le son [p]', targetPhoneme: 'p', items: [
+                { word: 'pomme', emoji: '🍎', isIntruder: false },
+                { word: 'poule', emoji: '🐔', isIntruder: false },
+                { word: 'pirate', emoji: '🏴‍☠️', isIntruder: false },
+                { word: 'fusée', emoji: '🚀', isIntruder: true }
+            ]},
+            { soundLabel: 'le son [ch]', targetPhoneme: 'ch', items: [
+                { word: 'chat', emoji: '🐱', isIntruder: false },
+                { word: 'cheval', emoji: '🐴', isIntruder: false },
+                { word: 'chocolat', emoji: '🍫', isIntruder: false },
+                { word: 'vélo', emoji: '🚲', isIntruder: true }
+            ]},
+            { soundLabel: 'le son [f]', targetPhoneme: 'f', items: [
+                { word: 'fée', emoji: '🧚', isIntruder: false },
+                { word: 'fourmi', emoji: '🐜', isIntruder: false },
+                { word: 'fusée', emoji: '🚀', isIntruder: false },
+                { word: 'tortue', emoji: '🐢', isIntruder: true }
+            ]},
+            { soundLabel: 'le son [t]', targetPhoneme: 't', items: [
+                { word: 'tomate', emoji: '🍅', isIntruder: false },
+                { word: 'tortue', emoji: '🐢', isIntruder: false },
+                { word: 'tigre', emoji: '🐯', isIntruder: false },
+                { word: 'mouton', emoji: '🐑', isIntruder: true }
+            ]},
+            { soundLabel: 'le son [b]', targetPhoneme: 'b', items: [
+                { word: 'banane', emoji: '🍌', isIntruder: false },
+                { word: 'ballon', emoji: '⚽', isIntruder: false },
+                { word: 'bus', emoji: '🚌', isIntruder: false },
+                { word: 'sapin', emoji: '🌲', isIntruder: true }
+            ]}
+        ];
+
+        // Banque pour "Le Train des Phrases" (syntaxe & ordre des mots)
+        const SENTENCE_TRAINS = [
+            { words: ['Le', 'chat', 'dort.'], emoji: '🐱💤', full: 'Le chat dort.' },
+            { words: ['Léo', 'a', 'un', 'vélo.'], emoji: '👦🚲', full: 'Léo a un vélo.' },
+            { words: ['La', 'lune', 'brille.'], emoji: '🌙✨', full: 'La lune brille.' },
+            { words: ['Le', 'lapin', 'mange.'], emoji: '🐰🥕', full: 'Le lapin mange.' },
+            { words: ['La', 'poule', 'picore.'], emoji: '🐔🌾', full: 'La poule picore.' },
+            { words: ['La', 'fusée', 'vole', 'vite.'], emoji: '🚀💨', full: 'La fusée vole vite.' },
+            { words: ['Le', 'mouton', 'est', 'blanc.'], emoji: '🐑☁️', full: 'Le mouton est blanc.' },
+            { words: ['Maman', 'lit', 'un', 'livre.'], emoji: '👩📖', full: 'Maman lit un livre.' },
+            { words: ['Le', 'chien', 'aboie', 'fort.'], emoji: '🐶🔊', full: 'Le chien aboie fort.' },
+            { words: ['Papa', 'répare', 'la', 'moto.'], emoji: '👨🏍️', full: 'Papa répare la moto.' },
+            { words: ['La', 'tortue', 'marche', 'lentement.'], emoji: '🐢🌿', full: 'La tortue marche lentement.' },
+            { words: ['Le', 'pirate', 'cherche', 'un', 'trésor.'], emoji: '🏴‍☠️💎', full: 'Le pirate cherche un trésor.' },
+            { words: ['La', 'petite', 'souris', 'court.'], emoji: '🐭💨', full: 'La petite souris court.' },
+            { words: ['Le', 'soleil', 'chauffe', 'la', 'plage.'], emoji: '☀️🏖️', full: 'Le soleil chauffe la plage.' }
+        ];
+
+        // Banque pour "Le Mot Magique" (lecture silencieuse de mots sans aide vocale immédiate)
+        const MAGIC_WORDS_READ = [
+            { word: 'crocodile', syllables: ['cro', 'co', 'dile'], correct: { emoji: '🐊', label: 'crocodile' }, distractors: [{ emoji: '🐘', label: 'éléphant' }, { emoji: '🐢', label: 'tortue' }, { emoji: '🐍', label: 'serpent' }] },
+            { word: 'parapluie', syllables: ['pa', 'ra', 'pluie'], correct: { emoji: '☂️', label: 'parapluie' }, distractors: [{ emoji: '🚀', label: 'fusée' }, { emoji: '🚲', label: 'vélo' }, { emoji: '🏠', label: 'maison' }] },
+            { word: 'papillon', syllables: ['pa', 'pi', 'llon'], correct: { emoji: '🦋', label: 'papillon' }, distractors: [{ emoji: '🐝', label: 'abeille' }, { emoji: '🐜', label: 'fourmi' }, { emoji: '🐟', label: 'poisson' }] },
+            { word: 'chocolat', syllables: ['cho', 'co', 'lat'], correct: { emoji: '🍫', label: 'chocolat' }, distractors: [{ emoji: '🍌', label: 'banane' }, { emoji: '🍅', label: 'tomate' }, { emoji: '🍎', label: 'pomme' }] },
+            { word: 'éléphant', syllables: ['é', 'lé', 'phant'], correct: { emoji: '🐘', label: 'éléphant' }, distractors: [{ emoji: '🦁', label: 'lion' }, { emoji: '🐴', label: 'cheval' }, { emoji: '🐑', label: 'mouton' }] },
+            { word: 'fusée', syllables: ['fu', 'sée'], correct: { emoji: '🚀', label: 'fusée' }, distractors: [{ emoji: '🏍️', label: 'moto' }, { emoji: '🚌', label: 'bus' }, { emoji: '🚁', label: 'hélicoptère' }] },
+            { word: 'ordinateur', syllables: ['or', 'di', 'na', 'teur'], correct: { emoji: '💻', label: 'ordinateur' }, distractors: [{ emoji: '🁣', label: 'domino' }, { emoji: '🛋️', label: 'canapé' }, { emoji: '🚰', label: 'lavabo' }] },
+            { word: 'pirate', syllables: ['pi', 'ra', 'te'], correct: { emoji: '🏴‍☠️', label: 'pirate' }, distractors: [{ emoji: '🧚', label: 'fée' }, { emoji: '🐶', label: 'chien' }, { emoji: '🐱', label: 'chat' }] },
+            { word: 'girafe', syllables: ['gi', 'ra', 'fe'], correct: { emoji: '🦒', label: 'girafe' }, distractors: [{ emoji: '🦓', label: 'zèbre' }, { emoji: '🐻', label: 'ours' }, { emoji: '🦊', label: 'renard' }] },
+            { word: 'bateau', syllables: ['ba', 'teau'], correct: { emoji: '⛵', label: 'bateau' }, distractors: [{ emoji: '🚂', label: 'train' }, { emoji: '🚗', label: 'voiture' }, { emoji: '✈️', label: 'avion' }] },
+            { word: 'cadeau', syllables: ['ca', 'deau'], correct: { emoji: '🎁', label: 'cadeau' }, distractors: [{ emoji: '🎈', label: 'ballon' }, { emoji: '🎂', label: 'gâteau' }, { emoji: '👑', label: 'couronne' }] },
+            { word: 'robot', syllables: ['ro', 'bot'], correct: { emoji: '🤖', label: 'robot' }, distractors: [{ emoji: '👻', label: 'fantôme' }, { emoji: '👾', label: 'alien' }, { emoji: '🤡', label: 'clown' }] },
+            { word: 'citron', syllables: ['ci', 'tron'], correct: { emoji: '🍋', label: 'citron' }, distractors: [{ emoji: '🍓', label: 'fraise' }, { emoji: '🍒', label: 'cerise' }, { emoji: '🍉', label: 'pastèque' }] },
+            { word: 'valise', syllables: ['va', 'li', 'se'], correct: { emoji: '🧳', label: 'valise' }, distractors: [{ emoji: '🎒', label: 'cartable' }, { emoji: '👟', label: 'chaussure' }, { emoji: '🎩', label: 'chapeau' }] },
+            { word: 'carotte', syllables: ['ca', 'rot', 'te'], correct: { emoji: '🥕', label: 'carotte' }, distractors: [{ emoji: '🌽', label: 'maïs' }, { emoji: '🍄', label: 'champignon' }, { emoji: '🥦', label: 'brocoli' }] },
+            { word: 'soleil', syllables: ['so', 'leil'], correct: { emoji: '☀️', label: 'soleil' }, distractors: [{ emoji: '🌙', label: 'lune' }, { emoji: '⭐', label: 'étoile' }, { emoji: '🌈', label: 'arc-en-ciel' }] }
+        ];
+
+        const SENTENCES_TO_READ = [
+            {
+                sentence: 'Le chat va sur le sofa.',
+                syllabified: [['Le'], ['chat'], ['va'], ['sur'], ['le'], ['so', 'fa.']],
+                correct: { emoji: '🐱🛋️', label: 'Un chat sur un sofa' },
+                options: [
+                    { emoji: '🐱🛋️', label: 'Un chat sur un sofa' },
+                    { emoji: '🐶🚲', label: 'Un chien sur un vélo' },
+                    { emoji: '🐑🌙', label: 'Un mouton sous la lune' }
+                ]
+            },
+            {
+                sentence: 'Léo a un joli vélo.',
+                syllabified: [['Lé', 'o'], ['a'], ['un'], ['jo', 'li'], ['vé', 'lo.']],
+                correct: { emoji: '👦🚲', label: 'Un garçon avec un vélo' },
+                options: [
+                    { emoji: '👦🚲', label: 'Un garçon avec un vélo' },
+                    { emoji: '👧🍅', label: 'Une fille avec une tomate' },
+                    { emoji: '🐱🐟', label: 'Un chat avec un poisson' }
+                ]
+            },
+            {
+                sentence: 'Le mouton regarde la lune.',
+                syllabified: [['Le'], ['mou', 'ton'], ['re', 'gar', 'de'], ['la'], ['lu', 'ne.']],
+                correct: { emoji: '🐑🌙', label: 'Un mouton et la lune' },
+                options: [
+                    { emoji: '🐑🌙', label: 'Un mouton et la lune' },
+                    { emoji: '🐰🌲', label: 'Un lapin sous un sapin' },
+                    { emoji: '🏍️🛣️', label: 'Une moto sur la route' }
+                ]
+            },
+            {
+                sentence: 'Le lapin est sous le sapin.',
+                syllabified: [['Le'], ['la', 'pin'], ['est'], ['sous'], ['le'], ['sa', 'pin.']],
+                correct: { emoji: '🐰🌲', label: 'Un lapin sous un sapin' },
+                options: [
+                    { emoji: '🐰🌲', label: 'Un lapin sous un sapin' },
+                    { emoji: '🐱🛋️', label: 'Un chat sur un sofa' },
+                    { emoji: '👦🚲', label: 'Un garçon sur un vélo' }
+                ]
+            },
+            {
+                sentence: 'La poule picore une tomate.',
+                syllabified: [['La'], ['pou', 'le'], ['pi', 'co', 're'], ['u', 'ne'], ['to', 'ma', 'te.']],
+                correct: { emoji: '🐔🍅', label: 'Une poule et une tomate' },
+                options: [
+                    { emoji: '🐔🍅', label: 'Une poule et une tomate' },
+                    { emoji: '🐭🧀', label: 'Une souris et un fromage' },
+                    { emoji: '🚀🌙', label: 'Une fusée vers la lune' }
+                ]
+            },
+            {
+                sentence: 'La fusée vole dans la nuit.',
+                syllabified: [['La'], ['fu', 'sée'], ['vo', 'le'], ['dans'], ['la'], ['nuit.']],
+                correct: { emoji: '🚀✨', label: 'Une fusée dans le ciel' },
+                options: [
+                    { emoji: '🚀✨', label: 'Une fusée dans le ciel' },
+                    { emoji: '🐢🥬', label: 'Une tortue avec une salade' },
+                    { emoji: '🐴🍎', label: 'Un cheval avec une pomme' }
+                ]
+            },
+            {
+                sentence: 'La tortue mange la salade.',
+                syllabified: [['La'], ['tor', 'tue'], ['man', 'ge'], ['la'], ['sa', 'la', 'de.']],
+                correct: { emoji: '🐢🥗', label: 'Une tortue mange une salade' },
+                options: [
+                    { emoji: '🐢🥗', label: 'Une tortue mange une salade' },
+                    { emoji: '🐷🏠', label: 'Un cochon devant sa maison' },
+                    { emoji: '🏴‍☠️🏝️', label: 'Un pirate sur une île' }
+                ]
+            },
+            {
+                sentence: 'Le pirate arrive sur une île.',
+                syllabified: [['Le'], ['pi', 'ra', 'te'], ['ar', 'ri', 've'], ['sur'], ['u', 'ne'], ['î', 'le.']],
+                correct: { emoji: '🏴‍☠️🏝️', label: 'Un pirate sur une île' },
+                options: [
+                    { emoji: '🏴‍☠️🏝️', label: 'Un pirate sur une île' },
+                    { emoji: '🧚🌟', label: 'Une fée avec une étoile' },
+                    { emoji: '🐟🌊', label: 'Un poisson dans la mer' }
+                ]
+            }
+        ];
+
+        // Conscience phonologique : comptage des SYLLABES ORALES (sans les « e » muets finaux)
+        const PHONO_WORDS = [
+            // 1 syllabe orale
+            { word: 'chat', oralSplit: 'chat', emoji: '🐱', count: 1 },
+            { word: 'lune', oralSplit: 'lune', emoji: '🌙', count: 1 },
+            { word: 'poule', oralSplit: 'poule', emoji: '🐔', count: 1 },
+            { word: 'fée', oralSplit: 'fée', emoji: '🧚', count: 1 },
+            { word: 'bus', oralSplit: 'bus', emoji: '🚌', count: 1 },
+            { word: 'pomme', oralSplit: 'pomme', emoji: '🍎', count: 1 },
+            { word: 'chien', oralSplit: 'chien', emoji: '🐶', count: 1 },
+            { word: 'train', oralSplit: 'train', emoji: '🚂', count: 1 },
+            { word: 'fleur', oralSplit: 'fleur', emoji: '🌸', count: 1 },
+            { word: 'livre', oralSplit: 'livre', emoji: '📖', count: 1 },
+            // 2 syllabes orales (ex : to-mate = 2, ba-nane = 2)
+            { word: 'tomate', oralSplit: 'to - mate', emoji: '🍅', count: 2 },
+            { word: 'banane', oralSplit: 'ba - nane', emoji: '🍌', count: 2 },
+            { word: 'moto', oralSplit: 'mo - to', emoji: '🏍️', count: 2 },
+            { word: 'vélo', oralSplit: 'vé - lo', emoji: '🚲', count: 2 },
+            { word: 'lapin', oralSplit: 'la - pin', emoji: '🐰', count: 2 },
+            { word: 'mouton', oralSplit: 'mou - ton', emoji: '🐑', count: 2 },
+            { word: 'pirate', oralSplit: 'pi - rate', emoji: '🏴‍☠️', count: 2 },
+            { word: 'salade', oralSplit: 'sa - lade', emoji: '🥗', count: 2 },
+            { word: 'fusée', oralSplit: 'fu - sée', emoji: '🚀', count: 2 },
+            { word: 'tortue', oralSplit: 'tor - tue', emoji: '🐢', count: 2 },
+            { word: 'bateau', oralSplit: 'ba - teau', emoji: '⛵', count: 2 },
+            { word: 'cadeau', oralSplit: 'ca - deau', emoji: '🎁', count: 2 },
+            { word: 'girafe', oralSplit: 'gi - rafe', emoji: '🦒', count: 2 },
+            { word: 'carotte', oralSplit: 'ca - rotte', emoji: '🥕', count: 2 },
+            // 3 syllabes orales (ex : cro-co-dile = 3)
+            { word: 'crocodile', oralSplit: 'cro - co - dile', emoji: '🐊', count: 3 },
+            { word: 'papillon', oralSplit: 'pa - pi - llon', emoji: '🦋', count: 3 },
+            { word: 'éléphant', oralSplit: 'é - lé - phant', emoji: '🐘', count: 3 },
+            { word: 'canapé', oralSplit: 'ca - na - pé', emoji: '🛋️', count: 3 },
+            { word: 'domino', oralSplit: 'do - mi - no', emoji: '🁣', count: 3 },
+            { word: 'lavabo', oralSplit: 'la - va - bo', emoji: '🚰', count: 3 },
+            { word: 'chocolat', oralSplit: 'cho - co - lat', emoji: '🍫', count: 3 },
+            { word: 'parapluie', oralSplit: 'pa - ra - pluie', emoji: '☂️', count: 3 },
+            { word: 'escargot', oralSplit: 'es - car - got', emoji: '🐌', count: 3 },
+            { word: 'caméra', oralSplit: 'ca - mé - ra', emoji: '🎥', count: 3 },
+            { word: 'ananas', oralSplit: 'a - na - nas', emoji: '🍍', count: 3 },
+            // 4 syllabes orales
+            { word: 'hippopotame', oralSplit: 'hi - ppo - po - tame', emoji: '🦛', count: 4 },
+            { word: 'rhinocéros', oralSplit: 'rhi - no - cé - ros', emoji: '🦏', count: 4 },
+            { word: 'ordinateur', oralSplit: 'or - di - na - teur', emoji: '💻', count: 4 },
+            { word: 'hélicoptère', oralSplit: 'hé - li - cop - tère', emoji: '🚁', count: 4 },
+            { word: 'télévision', oralSplit: 'té - lé - vi - sion', emoji: '📺', count: 4 },
+            { word: 'alligator', oralSplit: 'a - lli - ga - tor', emoji: '🐊', count: 4 }
+        ];
+
+        const SIGHT_WORDS_CP = [
+            { word: 'dans', hint: 'Le chat est ... la boîte.' },
+            { word: 'avec', hint: 'Léo joue ... son ballon.' },
+            { word: 'sur', hint: 'Le livre est ... la table.' },
+            { word: 'sous', hint: 'Le lapin est ... le sapin.' },
+            { word: 'est', hint: 'La lune ... ronde.' },
+            { word: 'une', hint: '... belle pomme rouge.' },
+            { word: 'les', hint: '... enfants lisent bien.' },
+            { word: 'pour', hint: 'Un cadeau ... maman.' },
+            { word: 'mais', hint: 'Il court ... il tombe.' },
+            { word: 'elle', hint: '... regarde les étoiles.' }
+        ];
+
+        const FLUENCY_WORDS = [
+            'la', 'mi', 'ro', 'su', 'fa', 'cho', 'pa', 'ti', 'bo', 'du',
+            'lune', 'moto', 'sofa', 'vélo', 'ami', 'tapi', 'papa', 'maman',
+            'lavabo', 'tomate', 'salade', 'animal', 'moulin', 'lapin', 'sapin',
+            'mouton', 'ballon', 'souris', 'tortue', 'pirate', 'banane', 'canapé',
+            'domino', 'numéro', 'fusée', 'poule', 'fourmi', 'cochon', 'poisson',
+            'maison', 'cheval', 'chocolat', 'papillon', 'éléphant', 'crocodile',
+            'parapluie', 'rivière', 'forêt', 'étoile', 'nuage', 'soleil', 'jardin',
+            'école', 'cahier', 'stylo', 'livre', 'image', 'musique', 'farine',
+            'robot', 'camion', 'girafe', 'citron', 'bateau', 'chapeau', 'cadeau',
+            'tulipe', 'carotte', 'chemise', 'valise', 'méduse', 'tigre', 'lion',
+            'renard', 'ours', 'zèbre', 'abeille', 'fraise', 'cerise', 'gâteau',
+            'train', 'voiture', 'avion', 'cartable', 'chaussure', 'fenêtre', 'porte',
+            'table', 'chaise', 'cuisine', 'chambre', 'pomme', 'poire', 'orange'
+        ];
+
+        // Exercices spécifiques Dyslexie (confusions visuelles, auditives et inversions)
+        const DYS_EXERCISES = [
+            // Confusions visuelles b / d et p / q
+            {
+                category: 'Confusion visuelle (b / d)',
+                prompt: 'Attention au sens du ventre de la lettre ! Trouve la lettre :',
+                target: { id: 'b', grapheme: 'b', tts: 'beu', tip: 'Le b a son ventre à droite (comme le pouce levé de la main gauche ✊).' },
+                options: ['b', 'd', 'p', 'q']
+            },
+            {
+                category: 'Confusion visuelle (b / d)',
+                prompt: 'Regarde bien de quel côté est le rond ! Trouve la lettre :',
+                target: { id: 'd', grapheme: 'd', tts: 'deu', tip: 'Le d a son dos à gauche (comme le pouce levé de la main droite).' },
+                options: ['d', 'b', 'q', 'p']
+            },
+            {
+                category: 'Confusion visuelle (p / q)',
+                prompt: 'La barre descend sous la ligne ! Trouve la lettre :',
+                target: { id: 'p', grapheme: 'p', tts: 'peu', tip: 'Le p a la tête en haut à droite.' },
+                options: ['p', 'q', 'b', 'd']
+            },
+            // Confusions auditives (sourdes / sonores)
+            {
+                category: 'Confusion auditive (p / b)',
+                prompt: 'Écoute bien si la gorge vibre ou si le son explose :',
+                target: { id: 'p', grapheme: 'p', tts: 'peu', tip: 'p souffle sans faire vibrer la gorge.' },
+                options: ['p', 'b', 't', 'd']
+            },
+            {
+                category: 'Confusion auditive (t / d)',
+                prompt: 'Écoute attentivement le début du son :',
+                target: { id: 'd', grapheme: 'd', tts: 'deu', tip: 'd fait vibrer la gorge.' },
+                options: ['d', 't', 'b', 'p']
+            },
+            {
+                category: 'Confusion auditive (f / v)',
+                prompt: 'Écoute si le vent souffle doucement ou vibre :',
+                target: { id: 'v', grapheme: 'v', tts: 'vvv', tip: 'v fait vibrer la lèvre inférieure.' },
+                options: ['v', 'f', 's', 'ch']
+            },
+            // Inversions de lettres dans les syllabes (al/la, or/ro, il/li)
+            {
+                category: 'Ordre des lettres (Inversion)',
+                prompt: 'Écoute bien quelle lettre commence la syllabe :',
+                target: { id: 'al', grapheme: 'al', tts: 'al', tip: 'On entend d’abord le A, puis le L.' },
+                options: ['al', 'la', 'ar', 'ra']
+            },
+            {
+                category: 'Ordre des lettres (Inversion)',
+                prompt: 'Écoute bien l’ordre des deux sons :',
+                target: { id: 'la', grapheme: 'la', tts: 'la', tip: 'On entend d’abord le L, puis le A.' },
+                options: ['la', 'al', 'lo', 'ol']
+            },
+            {
+                category: 'Ordre des lettres (Inversion)',
+                prompt: 'Attention à l’ordre des lettres ! Trouve :',
+                target: { id: 'or', grapheme: 'or', tts: 'or', tip: 'On entend d’abord le O, puis le R.' },
+                options: ['or', 'ro', 'ol', 'lo']
+            },
+            {
+                category: 'Ordre des lettres (Inversion)',
+                prompt: 'Écoute quelle lettre vient en premier :',
+                target: { id: 'li', grapheme: 'li', tts: 'li', tip: 'On entend d’abord le L, puis le I.' },
+                options: ['li', 'il', 'ri', 'ir']
+            }
+        ];
+
+        const LEVELS = [
+            { id: 1, title: 'Conscience Phonologique', desc: 'Compte les syllabes dans les mots à l’oral', helpTip: 'Écoute le mot, frappe dans tes mains chaque syllabe et choisis le bon chiffre (1 à 4).', icon: '👂', badgeIcon: '🎧', badgeName: 'Oreille d’Or', color: 'border-orange-400 bg-orange-50', type: 'phono-syllables' },
+            { id: 2, title: 'Les Voyelles Chantantes', desc: 'Reconnais a, i, o, u, e, é', helpTip: 'Écoute la voyelle chantée et aide-toi du geste Borel-Maisonny pour cliquer sur la bonne lettre rouge.', icon: '🔴', badgeIcon: '🎤', badgeName: 'Chanteur de Voyelles', color: 'border-red-400 bg-red-50', type: 'phoneme-voyelle' },
+            { id: 3, title: 'Les Consonnes Longues', desc: 'Les sons qui durent : l, r, m, s, f, v, ch', helpTip: 'Ces consonnes bleues font un bruit que l’on peut prolonger (fff, sss, rrr...). Écoute bien !', icon: '🔵', badgeIcon: '🌊', badgeName: 'Dompteur de Sons Longs', color: 'border-blue-400 bg-blue-50', type: 'phoneme-longue' },
+            { id: 4, title: 'Fusion Syllabique 1', desc: 'Marie une consonne longue et une voyelle', helpTip: 'Accroche la consonne longue avec la voyelle (ex : lll + a = la) et retrouve la syllabe entendue.', icon: '🧩', badgeIcon: '🪄', badgeName: 'Magicien des Syllabes', color: 'border-indigo-400 bg-indigo-50', type: 'syllable-long' },
+            { id: 5, title: 'Les Consonnes Courtes', desc: 'Les sons rapides : p, t, b, d, c', helpTip: 'Ces consonnes vertes font un petit bruit sec et rapide (p, t, b, d, k).', icon: '🟢', badgeIcon: '⚡', badgeName: 'Champion des Sons Courts', color: 'border-green-400 bg-green-50', type: 'phoneme-courte' },
+            { id: 6, title: 'Tri & Syllabes Courtes', desc: 'Lis pa, ti, bo, da, ca...', helpTip: 'Lis et reconnais les syllabes formées avec une consonne courte et une voyelle.', icon: '🎯', badgeIcon: '🏹', badgeName: 'As des Syllabes', color: 'border-teal-400 bg-teal-50', type: 'syllable-short' },
+            { id: 7, title: 'Les Sons Complexes', desc: 'Deux lettres ensemble : ou, on, oi, an, in', helpTip: 'Deux voyelles ou une voyelle + n s’unissent en violet pour créer un nouveau son.', icon: '🟣', badgeIcon: '🔮', badgeName: 'Explorateur des Sons', color: 'border-purple-400 bg-purple-50', type: 'phoneme-complexe' },
+            { id: 8, title: 'La Fabrique de Mots', desc: 'Assemble les syllabes pour écrire le mot', helpTip: 'Regarde le dessin, écoute le mot et clique sur les syllabes dans le bon ordre pour l’écrire.', icon: '🏗️', badgeIcon: '👷', badgeName: 'Architecte des Mots', color: 'border-amber-400 bg-amber-50', type: 'word-build' },
+            { id: 9, title: 'Les Mots-Outils du CP', desc: 'Reconnais vite : dans, avec, sur, est, les...', helpTip: 'Apprends à photographier les petits mots fréquents du CP grâce à la phrase d’indice.', icon: '🔑', badgeIcon: '🗝️', badgeName: 'Gardien des Mots-Outils', color: 'border-cyan-400 bg-cyan-50', type: 'sight-words' },
+            { id: 10, title: 'Petit Lecteur & Fluence', desc: 'Lis des phrases et relève le défi chrono !', helpTip: 'Déchiffre toute la phrase seul puis clique sur l’image qui raconte exactement l’histoire.', icon: '🏆', badgeIcon: '👑', badgeName: 'Lecteur Couronné', color: 'border-rose-400 bg-rose-50', type: 'sentence-read' },
+            { id: 11, title: 'L’Intrus Sonore', desc: 'Trouve le mot qui ne commence pas par le même son', helpTip: 'Écoute chaque image : trois mots commencent par le même son, clique sur l’intrus !', icon: '🕵️', badgeIcon: '🔍', badgeName: 'Détective des Sons', color: 'border-lime-400 bg-lime-50', type: 'sound-intruder' },
+            { id: 12, title: 'Le Train des Phrases', desc: 'Remets les wagons-mots dans le bon ordre', helpTip: 'Lis les étiquettes et clique sur les mots dans l’ordre pour construire une phrase qui a du sens.', icon: '🚂', badgeIcon: '🎖️', badgeName: 'Chef de Train', color: 'border-sky-400 bg-sky-50', type: 'sentence-train' },
+            { id: 13, title: 'Le Mot Magique', desc: 'Déchiffre le mot seul et trouve son dessin', helpTip: 'Lis le mot affiché sans aide audio, puis clique sur l’image correspondante.', icon: '✨', badgeIcon: '🧙', badgeName: 'Grand Magicien de Lecture', color: 'border-fuchsia-400 bg-fuchsia-50', type: 'magic-word' }
+        ];
+
+        const AVATARS = ['🦊', '🦉', '🐼', '🦁', '🐸', '🐰', '🐯', '🐨', '🦄', '🐧'];
+
+        /**
+         * GESTION DES PROFILS ET SAUVEGARDE LOCALE
+         */
+        const STORAGE_KEY = 'cali_lecture_cp_profiles_v1';
+
+        let appData = {
+            profiles: [],
+            activeProfileId: null
+        };
+
+        let gameState = {
+            currentLevelId: null,
+            activePeriodId: null,
+            isCustomTeacherMode: false,
+            isDysSpecialMode: false,
+            dysModeActive: false,
+            fluencyTimer: null,
+            fluencySecondsLeft: 60,
+            fluencyReadCount: 0,
+            fluencyCurrentWord: '',
+            customConfig: {
+                selectedIds: ['a', 'i', 'l', 's'],
+                showGesture: true,
+                questionsCount: 8
+            },
+            currentStep: 0,
+            totalSteps: 6,
+            currentScore: 0,
+            errorsCount: 0,
+            hasMistakeOnCurrentQuestion: false,
+            currentQuestion: null,
+            isAnswering: false,
+            builtSyllables: [],
+            usedQuestionKeys: [],
+            lastSpokenPrompt: ''
+        };
+
+        function loadAppData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    appData = JSON.parse(raw);
+                    if (!Array.isArray(appData.profiles)) appData.profiles = [];
+                }
+            } catch (e) {
+                console.warn('Erreur lecture sauvegarde:', e);
+            }
+        }
+
+        function saveAppData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+            } catch (e) {
+                console.warn('Erreur sauvegarde:', e);
+            }
+        }
+
+        function getActiveProfile() {
+            return appData.profiles.find(p => p.id === appData.activeProfileId) || null;
+        }
+
+        function updateHeaderUI() {
+            const profile = getActiveProfile();
+            const profBtn = document.getElementById('active-profile-btn');
+            const starsBox = document.getElementById('header-stars-box');
+
+            if (profile) {
+                profBtn.classList.remove('hidden');
+                profBtn.classList.add('flex');
+                starsBox.classList.remove('hidden');
+                starsBox.classList.add('flex');
+                document.getElementById('header-avatar').textContent = profile.avatar;
+                document.getElementById('header-name').textContent = profile.name;
+                document.getElementById('total-stars').textContent = profile.stars || 0;
+            } else {
+                profBtn.classList.add('hidden');
+                profBtn.classList.remove('flex');
+                starsBox.classList.add('hidden');
+                starsBox.classList.remove('flex');
+            }
+        }
+
+        /**
+         * NAVIGATION & ÉCRANS PRINCIPAUX
+         */
+        function goHome() {
+            stopFluencyTimer();
+            const profile = getActiveProfile();
+            if (!profile) {
+                openProfileSelector();
+                return;
+            }
+            gameState.currentLevelId = null;
+            gameState.activePeriodId = null;
+            gameState.isCustomTeacherMode = false;
+            gameState.isDysSpecialMode = false;
+            updateHeaderUI();
+            renderHomeScreen();
+        }
+
+        function openProfileSelector() {
+            stopFluencyTimer();
+            const container = document.getElementById('app-container');
+            container.innerHTML = `
+                <div class="max-w-xl mx-auto w-full space-y-6 pop-in">
+                    <div class="text-center space-y-2">
+                        <div class="text-5xl animate-bounce-gentle">🦉</div>
+                        <h2 class="font-title text-3xl font-bold text-slate-800">Qui va lire aujourd'hui ?</h2>
+                        <p class="text-slate-600 font-semibold">Choisis ton profil ou crée-en un nouveau pour sauvegarder tes étoiles !</p>
+                        <button type="button" onclick="speak('Qui va lire aujourd’hui ? Clique sur ta mascotte si tu es déjà inscrit, ou demande à un adulte d’écrire ton prénom en bas.', 0.95)" class="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-title font-bold text-sm px-4 py-2 rounded-full btn-game">
+                            🔊 Écouter la consigne
+                        </button>
+                    </div>
+
+                    ${appData.profiles.length > 0 ? `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            ${appData.profiles.map(p => `
+                                <div class="bg-white rounded-3xl p-4 border-4 border-sky-200 hover:border-sky-400 shadow-md flex items-center justify-between transition group">
+                                    <button onclick="selectProfile('${p.id}')" class="flex items-center gap-3 text-left flex-grow">
+                                        <span class="text-4xl bg-sky-50 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition">${p.avatar}</span>
+                                        <div>
+                                            <div class="font-title font-bold text-xl text-slate-800">${escapeHtml(p.name)}</div>
+                                            <div class="text-xs font-bold text-amber-600">⭐ ${p.stars || 0} étoiles • Étape ${p.unlockedLevel || 1}/${LEVELS.length}</div>
+                                        </div>
+                                    </button>
+                                    <button onclick="deleteProfile('${p.id}')" title="Supprimer ce profil" class="w-8 h-8 rounded-full text-slate-300 hover:text-red-500 hover:bg-red-50 font-bold transition">✕</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+
+                    <div class="bg-white/95 rounded-3xl p-6 border-4 border-amber-300 shadow-xl space-y-4">
+                        <h3 class="font-title text-xl font-bold text-amber-700">✨ Nouvel élève</h3>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Prénom de l'enfant</label>
+                            <input type="text" id="new-profile-name" maxlength="18" placeholder="Ex : Léo, Lina, Noah..." class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-amber-400 outline-none font-bold text-lg">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Choisis ta mascotte</label>
+                            <div class="flex flex-wrap gap-2" id="avatar-picker">
+                                ${AVATARS.map((av, idx) => `
+                                    <button type="button" onclick="pickAvatar('${av}', this)" class="avatar-opt w-11 h-11 rounded-2xl text-2xl border-2 ${idx === 0 ? 'border-amber-500 bg-amber-100 scale-110' : 'border-slate-200 bg-slate-50'} transition">
+                                        ${av}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <button onclick="createNewProfile()" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-title font-bold text-xl rounded-2xl btn-game">
+                            C'est parti ! 🚀
+                        </button>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => speak("Qui va lire aujourd'hui ? Clique sur ton prénom ou crée un nouveau profil.", 0.95), 300);
+        }
+
+        let selectedNewAvatar = AVATARS[0];
+        function pickAvatar(av, btn) {
+            selectedNewAvatar = av;
+            document.querySelectorAll('.avatar-opt').forEach(b => {
+                b.classList.remove('border-amber-500', 'bg-amber-100', 'scale-110');
+                b.classList.add('border-slate-200', 'bg-slate-50');
+            });
+            btn.classList.remove('border-slate-200', 'bg-slate-50');
+            btn.classList.add('border-amber-500', 'bg-amber-100', 'scale-110');
+        }
+
+        function createNewProfile() {
+            const input = document.getElementById('new-profile-name');
+            const name = (input.value || '').trim();
+            if (!name) {
+                showToast('Écris ton prénom pour commencer !', 'bg-amber-500');
+                input.focus();
+                return;
+            }
+            const newProf = {
+                id: 'prof_' + Date.now(),
+                name: name,
+                avatar: selectedNewAvatar,
+                stars: 0,
+                unlockedLevel: 1,
+                levelStars: {},
+                badges: []
+            };
+            appData.profiles.push(newProf);
+            appData.activeProfileId = newProf.id;
+            saveAppData();
+            speak(`Bienvenue ${name} !`);
+            goHome();
+        }
+
+        function selectProfile(id) {
+            appData.activeProfileId = id;
+            saveAppData();
+            const p = getActiveProfile();
+            if (p) speak(`Bonjour ${p.name} !`);
+            goHome();
+        }
+
+        function deleteProfile(id) {
+            appData.profiles = appData.profiles.filter(p => p.id !== id);
+            if (appData.activeProfileId === id) {
+                appData.activeProfileId = appData.profiles[0]?.id || null;
+            }
+            saveAppData();
+            openProfileSelector();
+        }
+
+        function renderHomeScreen() {
+            const profile = getActiveProfile();
+            const unlocked = profile ? (profile.unlockedLevel || 1) : 1;
+            const levelStars = profile?.levelStars || {};
+            const earnedBadges = Array.isArray(profile?.badges) ? profile.badges : [];
+
+            const container = document.getElementById('app-container');
+            container.innerHTML = `
+                <div class="space-y-6 pop-in">
+                    <!-- Bannière d'accueil -->
+                    <div class="bg-white/95 rounded-3xl p-5 sm:p-6 shadow-lg border-4 border-amber-300 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-4 text-center sm:text-left">
+                            <div class="text-5xl bg-amber-100 w-16 h-16 rounded-3xl flex items-center justify-center shadow-inner shrink-0">
+                                ${profile.avatar}
+                            </div>
+                            <div>
+                                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                                    <h2 class="font-title text-2xl sm:text-3xl font-bold text-slate-800">Bonjour ${escapeHtml(profile.name)} !</h2>
+                                    <button type="button" onclick="speak('Bonjour ${escapeHtml(profile.name)} ! Clique sur le haut-parleur bleu d’une carte pour écouter ce qu’il faut faire, puis clique sur la carte pour jouer.', 0.95)" class="bg-sky-500 hover:bg-sky-600 text-white font-title font-bold text-xs px-3 py-1.5 rounded-full btn-game flex items-center gap-1">
+                                        🔊 Écouter le menu
+                                    </button>
+                                </div>
+                                <p class="text-slate-600 font-semibold text-sm sm:text-base mt-1">Choisis ton étape pour t'entraîner à lire avec les gestes Borel-Maisonny.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-2 shrink-0">
+                            <div class="tooltip-wrapper flex items-center gap-1">
+                                <button onclick="startFluencyChallenge()" class="bg-rose-500 hover:bg-rose-600 text-white font-title font-bold px-4 py-2.5 rounded-2xl btn-game text-sm flex items-center gap-1.5">
+                                    ⏱️ Défi Fluence (1 min)
+                                </button>
+                                <button type="button" onclick="speak('Défi Fluence une minute. Lis le maximum de mots à voix haute avant la fin du chronomètre !', 0.95)" title="Écouter l'explication" class="w-9 h-9 rounded-full bg-rose-100 hover:bg-rose-200 border-2 border-rose-300 text-rose-800 font-bold text-sm flex items-center justify-center shrink-0">🔊</button>
+                                <div class="tooltip-bubble">Lis le maximum de syllabes et de mots en 1 minute pour gagner en rapidité (objectif CP) !</div>
+                            </div>
+                            <div class="tooltip-wrapper flex items-center gap-1">
+                                <button onclick="startDysSpecialTraining()" class="bg-purple-600 hover:bg-purple-700 text-white font-title font-bold px-4 py-2.5 rounded-2xl btn-game text-sm flex items-center gap-1.5">
+                                    👁️ Atelier Spécial Dys
+                                </button>
+                                <button type="button" onclick="speak('Atelier Spécial Dys. Un jeu pour bien différencier les lettres qui se ressemblent comme b et d, ou les sons proches.', 0.95)" title="Écouter l'explication" class="w-9 h-9 rounded-full bg-purple-100 hover:bg-purple-200 border-2 border-purple-300 text-purple-800 font-bold text-sm flex items-center justify-center shrink-0">🔊</button>
+                                <div class="tooltip-bubble">Entraînement ciblé sur les confusions visuelles (b/d, p/q), auditives (p/b, t/d, f/v) et inversions (al/la).</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vitrine des Badges gagnés par l'élève -->
+                    <div class="bg-white/95 rounded-3xl p-4 sm:p-5 border-4 border-amber-200 shadow-md space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="font-title text-lg sm:text-xl font-bold text-amber-800 flex items-center gap-2">
+                                <span>🏅</span> Mes Badges de Lecture (${earnedBadges.length}/${LEVELS.length})
+                            </h3>
+                            <span class="text-xs font-bold text-slate-500">Valide une étape avec 2 ou 3 ⭐ pour gagner son badge !</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2.5">
+                            ${LEVELS.map(lvl => {
+                                const hasBadge = earnedBadges.includes(lvl.id);
+                                return hasBadge
+                                    ? `<button type="button" onclick="playApplause(); speak('Badge ${lvl.badgeName}, gagné à l’étape ${lvl.id} !', 0.95)" class="flex items-center gap-2 bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-400 px-3 py-1.5 rounded-2xl shadow-sm hover:scale-105 transition">
+                                        <span class="text-2xl">${lvl.badgeIcon}</span>
+                                        <span class="font-title font-bold text-xs text-amber-900">${lvl.badgeName}</span>
+                                       </button>`
+                                    : `<div title="Étape ${lvl.id} : ${lvl.badgeName}" class="flex items-center gap-1.5 bg-slate-100 border-2 border-dashed border-slate-300 px-2.5 py-1.5 rounded-2xl opacity-55">
+                                        <span class="text-lg grayscale">🔒</span>
+                                        <span class="font-bold text-xs text-slate-400">Étape ${lvl.id}</span>
+                                       </div>`;
+                            }).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Progression par Périodes scolaires (Calimots CP) -->
+                    <div class="bg-white/95 rounded-3xl p-5 border-4 border-sky-200 shadow-md space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="font-title text-xl font-bold text-sky-800 flex items-center gap-2">
+                                <span>📅</span> Progression par Période (Calimots CP)
+                            </h3>
+                            <button type="button" onclick="speak('Progression par période. Choisis la période de ton année de CP pour réviser les sons, les syllabes et les mots.', 0.95)" class="bg-sky-100 hover:bg-sky-200 text-sky-800 font-bold text-xs px-3 py-1 rounded-full">
+                                🔊 Expliquer les périodes
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+                            ${PERIODS_CP.map(per => `
+                                <div class="p-3.5 rounded-2xl border-2 ${per.color} hover:scale-[1.03] transition shadow-sm flex flex-col justify-between gap-2">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 mb-1">
+                                            <span class="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full ${per.badgeBg}">${per.id}</span>
+                                            <button type="button" onclick="event.stopPropagation(); speak('${per.title}. ${per.subtitle}.', 0.95)" title="Écouter cette période" class="w-7 h-7 rounded-full bg-white/90 hover:bg-white border border-black/15 text-xs flex items-center justify-center shadow-sm">🔊</button>
+                                        </div>
+                                        <button type="button" onclick="startPeriodTraining('${per.id}')" class="text-left w-full">
+                                            <div class="font-title font-bold text-sm leading-snug">${per.title}</div>
+                                            <p class="text-xs opacity-85 mt-0.5">${per.subtitle}</p>
+                                        </button>
+                                    </div>
+                                    <button type="button" onclick="startPeriodTraining('${per.id}')" class="text-left text-[11px] font-bold bg-white/80 px-2 py-1 rounded-xl border border-black/10 truncate" title="${per.graphemesLabel}">
+                                        🔤 ${per.graphemesLabel}
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Grille des 10 étapes -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        ${LEVELS.map(lvl => {
+                            const isUnlocked = lvl.id <= unlocked;
+                            const stars = levelStars[lvl.id] || 0;
+                            const vocalDesc = isUnlocked
+                                ? `Étape ${lvl.id} : ${lvl.title}. ${lvl.helpTip}`
+                                : `Étape ${lvl.id} : ${lvl.title}. Cette étape est encore verrouillée. Réussis l’étape précédente avec au moins deux étoiles pour l’ouvrir !`;
+                            return `
+                                <div class="relative rounded-3xl p-5 border-4 transition-all ${isUnlocked ? `${lvl.color} shadow-md hover:scale-[1.02]` : 'bg-slate-100 border-slate-200 opacity-75'}">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <button ${isUnlocked ? `onclick="startLevel(${lvl.id})"` : `onclick="speak('${vocalDesc.replace(/'/g, "\\'")}', 0.95)"`} class="flex items-center gap-3 text-left flex-grow">
+                                            <span class="text-4xl">${isUnlocked ? lvl.icon : '🔒'}</span>
+                                            <div>
+                                                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Étape ${lvl.id}</span>
+                                                <h3 class="font-title text-xl font-bold text-slate-800">${lvl.title}</h3>
+                                                <p class="text-sm text-slate-600 font-semibold mt-0.5">${lvl.desc}</p>
+                                            </div>
+                                        </button>
+                                        <div class="flex flex-col items-end gap-1.5 shrink-0">
+                                            <div class="flex items-center gap-1.5">
+                                                <button type="button" onclick="event.stopPropagation(); speak('${vocalDesc.replace(/'/g, "\\'")}', 0.95)" title="Écouter l'explication de cette étape" class="w-8 h-8 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm flex items-center justify-center cursor-pointer shadow">🔊</button>
+                                                <div class="tooltip-wrapper">
+                                                    <span onclick="event.stopPropagation(); toggleTooltip(this); speak('${lvl.helpTip.replace(/'/g, "\\'")}', 0.95)" class="w-8 h-8 rounded-full bg-white/90 hover:bg-white border border-slate-300 text-sky-700 font-bold text-xs flex items-center justify-center cursor-pointer shadow-sm">ⓘ</span>
+                                                    <div class="tooltip-bubble">${lvl.helpTip}</div>
+                                                </div>
+                                            </div>
+                                            <div class="text-lg">
+                                                ${isUnlocked ? ('⭐'.repeat(stars) + '☆'.repeat(3 - stars)) : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * MOTEUR DE JEU & GÉNÉRATION DES QUESTIONS (AVEC PIOCHE SANS REMISE)
+         */
+        function pickUnique(arr, keyFn) {
+            if (!arr || arr.length === 0) return null;
+            const unused = arr.filter(item => !gameState.usedQuestionKeys.includes(keyFn(item)));
+            const pool = unused.length > 0 ? unused : arr;
+            if (unused.length === 0) {
+                // On réinitialise uniquement les clés de ce pool si tout a déjà été vu
+                const poolKeys = new Set(arr.map(keyFn));
+                gameState.usedQuestionKeys = gameState.usedQuestionKeys.filter(k => !poolKeys.has(k));
+            }
+            const chosen = pickRandom(pool);
+            gameState.usedQuestionKeys.push(keyFn(chosen));
+            return chosen;
+        }
+
+        function startLevel(levelId) {
+            stopFluencyTimer();
+            gameState.currentLevelId = levelId;
+            gameState.activePeriodId = null;
+            gameState.isCustomTeacherMode = false;
+            gameState.isDysSpecialMode = false;
+            gameState.currentStep = 0;
+            gameState.totalSteps = 6;
+            gameState.currentScore = 0;
+            gameState.errorsCount = 0;
+            gameState.hasMistakeOnCurrentQuestion = false;
+            gameState.isAnswering = false;
+            gameState.builtWords = [];
+            gameState.usedQuestionKeys = [];
+            gameState.lastSpokenPrompt = '';
+            nextQuestion();
+        }
+
+        function startPeriodTraining(periodId) {
+            const per = PERIODS_CP.find(p => p.id === periodId);
+            if (!per) return;
+            stopFluencyTimer();
+            gameState.currentLevelId = null;
+            gameState.activePeriodId = periodId;
+            gameState.isCustomTeacherMode = false;
+            gameState.isDysSpecialMode = false;
+            gameState.currentStep = 0;
+            gameState.totalSteps = 8;
+            gameState.currentScore = 0;
+            gameState.errorsCount = 0;
+            gameState.hasMistakeOnCurrentQuestion = false;
+            gameState.isAnswering = false;
+            gameState.usedQuestionKeys = [];
+            gameState.lastSpokenPrompt = '';
+            speak(`Entraînement ${per.title} !`);
+            nextQuestion();
+        }
+
+        function startDysSpecialTraining() {
+            stopFluencyTimer();
+            gameState.currentLevelId = null;
+            gameState.activePeriodId = null;
+            gameState.isCustomTeacherMode = false;
+            gameState.isDysSpecialMode = true;
+            gameState.currentStep = 0;
+            gameState.totalSteps = 8;
+            gameState.currentScore = 0;
+            gameState.errorsCount = 0;
+            gameState.hasMistakeOnCurrentQuestion = false;
+            gameState.isAnswering = false;
+            gameState.usedQuestionKeys = [];
+            gameState.lastSpokenPrompt = '';
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (gameState.currentStep >= gameState.totalSteps) {
+                renderLevelComplete();
+                return;
+            }
+
+            gameState.currentStep++;
+            gameState.isAnswering = false;
+            gameState.hasMistakeOnCurrentQuestion = false;
+            gameState.builtSyllables = [];
+            gameState.builtWords = [];
+            if (gameState.activePeriodId) {
+                const per = PERIODS_CP.find(p => p.id === gameState.activePeriodId);
+                const periodPhonemes = PHONEMES.filter(p => p.period === per.id);
+                const modeRoll = gameState.currentStep % 3;
+
+                if (modeRoll === 1) {
+                    // Reconnaissance d'un graphème de la période
+                    gameState.currentQuestion = buildPhonemeQuestion(periodPhonemes, true);
+                } else if (modeRoll === 2) {
+                    // Lecture d'une syllabe de la période
+                    const sylText = pickUnique(per.syllables, s => 'syl_' + s);
+                    const distractors = shuffleArray(per.syllables.filter(s => s !== sylText)).slice(0, 3);
+                    gameState.currentQuestion = {
+                        kind: 'syllable',
+                        prompt: 'Écoute et retrouve la syllabe :',
+                        helpTip: `Lis chaque syllabe de la ${per.title} en accrochant les deux sons ensemble.`,
+                        target: { text: sylText, tts: sylText },
+                        options: shuffleArray([sylText, ...distractors])
+                    };
+                } else {
+                    // Construction d'un mot décodable de la période
+                    const periodWords = WORDS_TO_BUILD.filter(w => per.words.includes(w.word));
+                    const targetWord = pickUnique(periodWords.length ? periodWords : WORDS_TO_BUILD, w => 'word_' + w.word);
+                    const pool = shuffleArray([...targetWord.syllables, ...targetWord.distractors]);
+                    gameState.currentQuestion = {
+                        kind: 'word-build',
+                        prompt: 'Reconstruis le mot avec ses syllabes :',
+                        helpTip: 'Écoute le mot entier puis clique sur ses syllabes dans l’ordre de lecture.',
+                        target: targetWord,
+                        pool: pool
+                    };
+                }
+                renderQuestion();
+                return;
+            }
+
+            if (gameState.isCustomTeacherMode) {
+                const pool = PHONEMES.filter(p => gameState.customConfig.selectedIds.includes(p.id));
+                gameState.currentQuestion = buildPhonemeQuestion(pool, gameState.customConfig.showGesture);
+                renderQuestion();
+                return;
+            }
+
+            if (gameState.isDysSpecialMode) {
+                const ex = pickUnique(DYS_EXERCISES, e => 'dys_' + e.category + '_' + e.target.id);
+                gameState.currentQuestion = {
+                    kind: 'dys-special',
+                    category: ex.category,
+                    prompt: ex.prompt,
+                    helpTip: ex.target.tip,
+                    target: ex.target,
+                    options: shuffleArray([...ex.options])
+                };
+                renderQuestion();
+                return;
+            }
+
+            const lvl = LEVELS.find(l => l.id === gameState.currentLevelId);
+
+            if (lvl.type === 'phono-syllables') {
+                const target = pickUnique(PHONO_WORDS, w => 'phono_' + w.word);
+                gameState.currentQuestion = {
+                    kind: 'phono-count',
+                    prompt: 'Combien de syllabes entends-tu dans ce mot ?',
+                    helpTip: lvl.helpTip,
+                    target: target
+                };
+            } else if (lvl.type === 'phoneme-voyelle') {
+                gameState.currentQuestion = buildPhonemeQuestion(PHONEMES.filter(p => p.category === 'voyelle'), true, lvl.helpTip);
+            } else if (lvl.type === 'phoneme-longue') {
+                gameState.currentQuestion = buildPhonemeQuestion(PHONEMES.filter(p => p.category === 'consonne-longue'), true, lvl.helpTip);
+            } else if (lvl.type === 'phoneme-courte') {
+                gameState.currentQuestion = buildPhonemeQuestion(PHONEMES.filter(p => p.category === 'consonne-courte'), true, lvl.helpTip);
+            } else if (lvl.type === 'phoneme-complexe') {
+                gameState.currentQuestion = buildPhonemeQuestion(PHONEMES.filter(p => p.category === 'complexe'), true, lvl.helpTip);
+            } else if (lvl.type === 'syllable-long') {
+                const target = pickUnique(SYLLABLES_LONG, s => 'syllong_' + s.text);
+                const distractors = shuffleArray(SYLLABLES_LONG.filter(s => s.text !== target.text)).slice(0, 3);
+                gameState.currentQuestion = {
+                    kind: 'syllable',
+                    prompt: 'Fais glisser les deux sons et trouve la syllabe :',
+                    helpTip: lvl.helpTip,
+                    target: target,
+                    options: shuffleArray([target, ...distractors]).map(s => s.text)
+                };
+            } else if (lvl.type === 'syllable-short') {
+                const target = pickUnique(SYLLABLES_SHORT, s => 'sylshort_' + s.text);
+                const distractors = shuffleArray(SYLLABLES_SHORT.filter(s => s.text !== target.text)).slice(0, 3);
+                gameState.currentQuestion = {
+                    kind: 'syllable',
+                    prompt: 'Écoute bien et clique sur la bonne syllabe :',
+                    helpTip: lvl.helpTip,
+                    target: target,
+                    options: shuffleArray([target, ...distractors]).map(s => s.text)
+                };
+            } else if (lvl.type === 'word-build') {
+                const target = pickUnique(WORDS_TO_BUILD, w => 'word_' + w.word);
+                const pool = shuffleArray([...target.syllables, ...target.distractors]);
+                gameState.currentQuestion = {
+                    kind: 'word-build',
+                    prompt: 'Assemble les syllabes dans le bon ordre :',
+                    helpTip: lvl.helpTip,
+                    target: target,
+                    pool: pool
+                };
+            } else if (lvl.type === 'sight-words') {
+                const target = pickUnique(SIGHT_WORDS_CP, w => 'sight_' + w.word);
+                const distractors = shuffleArray(SIGHT_WORDS_CP.filter(w => w.word !== target.word)).slice(0, 3);
+                gameState.currentQuestion = {
+                    kind: 'sight-word',
+                    prompt: 'Retrouve le mot-outil entendu :',
+                    helpTip: lvl.helpTip,
+                    target: target,
+                    options: shuffleArray([target, ...distractors]).map(w => w.word)
+                };
+            } else if (lvl.type === 'sentence-read') {
+                const target = pickUnique(SENTENCES_TO_READ, s => 'sent_' + s.sentence);
+                gameState.currentQuestion = {
+                    kind: 'sentence',
+                    prompt: 'Lis la phrase et clique sur la bonne image :',
+                    helpTip: lvl.helpTip,
+                    target: target,
+                    options: shuffleArray([...target.options])
+                };
+            } else if (lvl.type === 'sound-intruder') {
+                const set = pickUnique(INTRUDER_SETS, s => 'intr_' + s.targetPhoneme);
+                gameState.currentQuestion = {
+                    kind: 'sound-intruder',
+                    prompt: `Trouve l'intrus qui ne commence pas par ${set.soundLabel} :`,
+                    helpTip: lvl.helpTip,
+                    target: set,
+                    options: shuffleArray([...set.items])
+                };
+            } else if (lvl.type === 'sentence-train') {
+                const train = pickUnique(SENTENCE_TRAINS, t => 'train_' + t.full);
+                gameState.currentQuestion = {
+                    kind: 'sentence-train',
+                    prompt: 'Accroche les wagons dans le bon ordre pour faire une phrase :',
+                    helpTip: lvl.helpTip,
+                    target: train,
+                    pool: shuffleArray([...train.words])
+                };
+            } else if (lvl.type === 'magic-word') {
+                const mw = pickUnique(MAGIC_WORDS_READ, m => 'magic_' + m.word);
+                gameState.currentQuestion = {
+                    kind: 'magic-word',
+                    prompt: 'Lis ce mot tout seul et clique sur son image :',
+                    helpTip: lvl.helpTip,
+                    target: mw,
+                    options: shuffleArray([mw.correct, ...mw.distractors])
+                };
+            }
+
+            renderQuestion();
+        }
+
+        function buildPhonemeQuestion(pool, showGesture = true, helpTip = 'Écoute bien le son et observe le geste Borel-Maisonny en indice.') {
+            const safePool = pool.length >= 2 ? pool : PHONEMES.slice(0, 4);
+            const target = pickUnique(safePool, p => 'phon_' + p.id);
+            const distractors = shuffleArray(safePool.filter(p => p.id !== target.id)).slice(0, Math.min(3, safePool.length - 1));
+            return {
+                kind: 'phoneme',
+                prompt: 'Écoute et trouve le son :',
+                helpTip: helpTip,
+                showGesture: showGesture,
+                target: target,
+                options: shuffleArray([target, ...distractors])
+            };
+        }
+
+        function renderQuestion() {
+            const q = gameState.currentQuestion;
+            const progressPct = Math.round(((gameState.currentStep - 1) / gameState.totalSteps) * 100);
+            const container = document.getElementById('app-container');
+
+            // Ne prononce la consigne que si elle est nouvelle (1ère question ou changement de type d'exercice)
+            const promptKey = q.kind === 'sound-intruder' ? 'sound-intruder' : q.prompt;
+            const shouldSpeakPrompt = (gameState.lastSpokenPrompt !== promptKey);
+            gameState.lastSpokenPrompt = promptKey;
+
+            let bodyHtml = '';
+
+            if (q.kind === 'phono-count') {
+                bodyHtml = `
+                    <div class="text-center space-y-5">
+                        <div class="inline-flex flex-col items-center bg-orange-50 border-4 border-orange-300 rounded-3xl px-8 py-5 shadow-inner">
+                            <span class="text-7xl mb-2">${q.target.emoji}</span>
+                            <button onclick="speak('${q.target.word}', 0.8)" class="mt-2 bg-orange-500 hover:bg-orange-600 text-white font-title font-bold px-5 py-2.5 rounded-2xl btn-game flex items-center gap-2">
+                                🔊 Écouter le mot
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-lg mx-auto">
+                            ${[1, 2, 3, 4].map(num => `
+                                <button onclick="checkPhonoCountAnswer(${num}, this)" class="py-5 rounded-3xl border-4 border-slate-200 bg-white hover:border-orange-400 font-title font-bold text-3xl text-slate-800 btn-game">
+                                    ${num} 👏
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    if (shouldSpeakPrompt) speakThenText(q.prompt, q.target.word);
+                    else speak(q.target.word, 0.85);
+                }, 250);
+            } else if (q.kind === 'phoneme') {
+                bodyHtml = `
+                    <div class="text-center space-y-5">
+                        <div class="flex flex-col items-center gap-3">
+                            <button onclick="speakPhoneme(gameState.currentQuestion.target)" class="bg-sky-500 hover:bg-sky-600 text-white font-title font-bold text-xl px-7 py-4 rounded-3xl btn-game flex items-center gap-3 shadow-lg">
+                                <span class="text-3xl">🔊</span> Réécouter le son
+                            </button>
+                            ${q.showGesture ? `
+                                <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl px-4 py-2.5 max-w-md mx-auto flex items-center gap-3 text-left">
+                                    <span class="text-3xl">${q.target.gestureIcon}</span>
+                                    <div class="text-xs font-bold text-amber-900">
+                                        <span class="uppercase text-amber-600 block">Geste Borel-Maisonny :</span>
+                                        ${q.target.gestureText}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto pt-2">
+                            ${q.options.map(opt => `
+                                <button onclick="checkPhonemeAnswer('${opt.id}', this)" class="py-7 px-4 rounded-3xl border-4 card-${opt.category} font-title font-bold text-4xl sm:text-5xl btn-game flex flex-col items-center justify-center gap-1">
+                                    <span>${opt.grapheme}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    if (shouldSpeakPrompt) speakThenPhoneme(q.prompt, q.target);
+                    else speakPhoneme(q.target);
+                }, 250);
+            } else if (q.kind === 'syllable') {
+                bodyHtml = `
+                    <div class="text-center space-y-6">
+                        <button onclick="speakSyllable(gameState.currentQuestion.target.text, gameState.currentQuestion.target.tts)" class="bg-indigo-500 hover:bg-indigo-600 text-white font-title font-bold text-xl px-7 py-4 rounded-3xl btn-game inline-flex items-center gap-3">
+                            <span class="text-3xl">🔊</span> Écouter la syllabe
+                        </button>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                            ${q.options.map(syl => `
+                                <button onclick="checkSyllableAnswer('${syl}', this)" class="py-7 px-4 rounded-3xl border-4 border-indigo-200 bg-white hover:border-indigo-400 font-title font-bold text-4xl text-indigo-900 btn-game">
+                                    ${syl}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    if (shouldSpeakPrompt) speakThenSyllable(q.prompt, q.target.text, q.target.tts);
+                    else speakSyllable(q.target.text, q.target.tts);
+                }, 250);
+            } else if (q.kind === 'word-build') {
+                bodyHtml = `
+                    <div class="text-center space-y-5">
+                        <div class="inline-flex flex-col items-center bg-amber-50 border-4 border-amber-300 rounded-3xl px-8 py-4">
+                            <span class="text-6xl mb-2">${q.target.emoji}</span>
+                            <button onclick="speak('${q.target.word}', 0.85)" class="bg-amber-500 hover:bg-amber-600 text-white font-title font-bold px-5 py-2 rounded-2xl btn-game text-sm flex items-center gap-2">
+                                🔊 Écouter le mot
+                            </button>
+                        </div>
+
+                        <!-- Emplacements des syllabes à remplir -->
+                        <div class="flex justify-center items-center gap-3 flex-wrap">
+                            ${q.target.syllables.map((_, idx) => `
+                                <div id="slot-${idx}" class="w-24 h-16 rounded-2xl border-4 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center font-title font-bold text-2xl text-slate-400">
+                                    ?
+                                </div>
+                            `).join('')}
+                            <button onclick="resetWordBuild()" title="Effacer et recommencer" class="w-12 h-12 rounded-2xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-lg">
+                                ↺
+                            </button>
+                        </div>
+
+                        <!-- Étiquettes syllabes disponibles -->
+                        <div class="flex justify-center flex-wrap gap-3 max-w-lg mx-auto pt-2">
+                            ${q.pool.map((syl, idx) => `
+                                <button onclick="selectWordSyllable('${syl}', ${idx}, this)" class="px-6 py-4 rounded-2xl border-4 border-sky-300 bg-white hover:bg-sky-50 font-title font-bold text-2xl text-sky-900 btn-game">
+                                    ${syl}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    if (shouldSpeakPrompt) speakThenText(q.prompt, q.target.word);
+                    else speak(q.target.word, 0.85);
+                }, 250);
+            } else if (q.kind === 'sight-word') {
+                bodyHtml = `
+                    <div class="text-center space-y-5">
+                        <div class="bg-cyan-50 border-2 border-cyan-300 rounded-2xl p-4 max-w-md mx-auto space-y-2">
+                            <button onclick="speak('${q.target.word}', 0.85)" class="bg-cyan-600 hover:bg-cyan-700 text-white font-title font-bold text-lg px-6 py-3 rounded-2xl btn-game inline-flex items-center gap-2">
+                                🔊 Écouter le mot-outil
+                            </button>
+                            <p class="text-sm font-bold text-cyan-900">💡 Indice : « ${q.target.hint} »</p>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
+                            ${q.options.map(w => `
+                                <button onclick="checkSightWordAnswer('${w}', this)" class="py-5 px-4 rounded-3xl border-4 border-cyan-200 bg-white hover:border-cyan-400 font-title font-bold text-3xl text-slate-800 btn-game">
+                                    ${w}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    if (shouldSpeakPrompt) speakThenText(q.prompt, q.target.word);
+                    else speak(q.target.word, 0.85);
+                }, 250);
+            } else if (q.kind === 'sentence') {
+                const formattedSentence = formatSentenceWithSyllables(q.target);
+                bodyHtml = `
+                    <div class="text-center space-y-6">
+                        <div class="bg-rose-50 border-4 border-rose-300 rounded-3xl p-6 max-w-2xl mx-auto shadow-inner">
+                            <p class="font-title font-bold text-2xl sm:text-4xl text-slate-800 leading-relaxed">
+                                ${formattedSentence}
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+                            ${q.options.map(opt => `
+                                <button onclick="checkSentenceAnswer('${opt.label.replace(/'/g, "\\'")}', this)" class="p-5 rounded-3xl border-4 border-slate-200 bg-white hover:border-rose-400 btn-game flex flex-col items-center gap-2">
+                                    <span class="text-5xl">${opt.emoji}</span>
+                                    <span class="text-xs font-bold text-slate-600">${opt.label}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                if (shouldSpeakPrompt) {
+                    setTimeout(() => speak(q.prompt, 0.95), 250);
+                }
+            } else if (q.kind === 'dys-special') {
+                const targetPhonemeObj = PHONEMES.find(p => p.id === q.target.id) || q.target;
+                bodyHtml = `
+                    <div class="text-center space-y-5">
+                        <span class="inline-block bg-purple-100 text-purple-800 border border-purple-300 text-xs font-bold px-3 py-1 rounded-full">
+                            👁️ ${q.category}
+                        </span>
+                        <div>
+                            <button onclick="speakPhoneme(PHONEMES.find(p => p.id === '${q.target.id}') || gameState.currentQuestion.target)" class="bg-purple-600 hover:bg-purple-700 text-white font-title font-bold text-xl px-7 py-4 rounded-3xl btn-game inline-flex items-center gap-3">
+                                <span class="text-3xl">🔊</span> Réécouter le son
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-xl mx-auto">
+                            ${q.options.map(opt => `
+                                <button onclick="checkDysSpecialAnswer('${opt}', this)" class="py-7 px-4 rounded-3xl border-4 border-purple-200 bg-white hover:border-purple-500 font-title font-bold text-5xl text-slate-800 btn-game">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    if (shouldSpeakPrompt) speakThenPhoneme(q.prompt, targetPhonemeObj);
+                    else speakPhoneme(targetPhonemeObj);
+                }, 250);
+            } else if (q.kind === 'sound-intruder') {
+                const targetPhonemeObj = PHONEMES.find(p => p.id === q.target.targetPhoneme) || { id: q.target.targetPhoneme, tts: q.target.targetPhoneme };
+                bodyHtml = `
+                    <div class="text-center space-y-5">
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button onclick="speakThenPhoneme('Trouve l’intrus qui ne commence pas par le son', PHONEMES.find(p => p.id === '${q.target.targetPhoneme}') || { id: '${q.target.targetPhoneme}', tts: '${q.target.targetPhoneme}' })" class="bg-lime-600 hover:bg-lime-700 text-white font-title font-bold text-lg px-6 py-3 rounded-2xl btn-game inline-flex items-center gap-2">
+                                🔊 Réécouter la consigne
+                            </button>
+                            <button onclick="speakPhoneme(PHONEMES.find(p => p.id === '${q.target.targetPhoneme}') || { id: '${q.target.targetPhoneme}', tts: '${q.target.targetPhoneme}' })" class="bg-sky-500 hover:bg-sky-600 text-white font-title font-bold text-lg px-6 py-3 rounded-2xl btn-game inline-flex items-center gap-2">
+                                🎧 Écouter le son [${q.target.targetPhoneme}]
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                            ${q.options.map(item => `
+                                <div class="rounded-3xl border-4 border-lime-200 bg-white p-4 flex flex-col items-center justify-between gap-2 shadow-sm">
+                                    <button type="button" onclick="speak('${item.word}', 0.85)" title="Écouter ce mot" class="self-end w-8 h-8 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-800 text-sm font-bold flex items-center justify-center">🔊</button>
+                                    <button type="button" onclick="checkIntruderAnswer(${item.isIntruder}, '${item.word}', this)" class="w-full flex flex-col items-center gap-2 py-2 rounded-2xl hover:bg-lime-50 transition">
+                                        <span class="text-6xl">${item.emoji}</span>
+                                        <span class="font-title font-bold text-lg text-slate-700">${item.word}</span>
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    if (shouldSpeakPrompt) speakThenPhoneme("Trouve l'intrus qui ne commence pas par le son", targetPhonemeObj);
+                    else speakPhoneme(targetPhonemeObj);
+                }, 250);
+            } else if (q.kind === 'sentence-train') {
+                bodyHtml = `
+                    <div class="text-center space-y-5">
+                        <div class="text-5xl">${q.target.emoji}</div>
+                        <!-- Wagons à remplir -->
+                        <div class="flex justify-center items-center gap-2 flex-wrap bg-sky-50 border-4 border-sky-200 rounded-3xl p-4">
+                            <span class="text-3xl">🚂</span>
+                            ${q.target.words.map((_, idx) => `
+                                <div id="train-slot-${idx}" class="min-w-[85px] px-3 h-14 rounded-2xl border-4 border-dashed border-sky-300 bg-white flex items-center justify-center font-title font-bold text-xl text-slate-400">
+                                    ...
+                                </div>
+                            `).join('')}
+                            <button onclick="resetSentenceTrain()" title="Recommencer le train" class="w-11 h-11 rounded-2xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-lg ml-1">
+                                ↺
+                            </button>
+                        </div>
+                        <!-- Étiquettes mots mélangés -->
+                        <div class="flex justify-center flex-wrap gap-3 max-w-xl mx-auto">
+                            ${q.pool.map((w, idx) => `
+                                <button onclick="selectTrainWord('${w.replace(/'/g, "\\'")}', ${idx}, this)" class="px-5 py-3.5 rounded-2xl border-4 border-amber-300 bg-white hover:bg-amber-50 font-title font-bold text-2xl text-slate-800 btn-game">
+                                    ${w}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                if (shouldSpeakPrompt) {
+                    setTimeout(() => speak(q.prompt, 0.92), 250);
+                }
+            } else if (q.kind === 'magic-word') {
+                const displayWord = gameState.dysModeActive
+                    ? q.target.syllables.map((s, i) => `<span class="syl-alt-${i % 2}">${s}</span>`).join('')
+                    : q.target.word;
+                bodyHtml = `
+                    <div class="text-center space-y-6">
+                        <div class="bg-fuchsia-50 border-4 border-fuchsia-300 rounded-3xl py-6 px-8 max-w-md mx-auto shadow-inner">
+                            <div class="font-title font-bold text-4xl sm:text-5xl text-fuchsia-950 tracking-wide">
+                                ${displayWord}
+                            </div>
+                            <p class="text-xs font-bold text-fuchsia-700 mt-2">Déchiffre ce mot dans ta tête !</p>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                            ${q.options.map(opt => `
+                                <button onclick="checkMagicWordAnswer('${opt.label}', this)" class="p-5 rounded-3xl border-4 border-slate-200 bg-white hover:border-fuchsia-400 btn-game flex flex-col items-center gap-2">
+                                    <span class="text-6xl">${opt.emoji}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                if (shouldSpeakPrompt) {
+                    setTimeout(() => speak(q.prompt, 0.92), 250);
+                }
+            }
+
+            container.innerHTML = `
+                <div class="bg-white/95 rounded-3xl p-5 sm:p-8 border-4 border-sky-200 shadow-xl space-y-6 pop-in">
+                    <!-- Barre supérieure de l'exercice -->
+                    <div class="flex items-center justify-between gap-3">
+                        <button onclick="goHome()" class="px-3.5 py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 font-bold text-sm text-slate-600">
+                            ← Quitter
+                        </button>
+                        <div class="flex-grow bg-slate-100 h-4 rounded-full overflow-hidden border border-slate-200">
+                            <div class="bg-emerald-400 h-full transition-all duration-300" style="width: ${progressPct}%"></div>
+                        </div>
+                        <span class="font-title font-bold text-sm text-slate-600 shrink-0">${gameState.currentStep}/${gameState.totalSteps}</span>
+                        <button onclick="showContextualHelp()" class="px-3 py-1.5 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold text-xs shrink-0">
+                            ❓ Aide
+                        </button>
+                    </div>
+
+                    <h2 class="font-title text-2xl sm:text-3xl font-bold text-center text-slate-800">${q.prompt}</h2>
+                    ${bodyHtml}
+                </div>
+            `;
+        }
+
+        /**
+         * VALIDATION DES RÉPONSES & COMPTAGE STRICT DES ERREURS AU PREMIER ESSAI
+         */
+        function showFeedback(message, isSuccess) {
+            showToast(message, isSuccess ? 'bg-emerald-600' : 'bg-rose-600');
+        }
+
+        function handleWrongAttempt(btnEl, customMsg = "Oups ! Réessaie encore une fois.") {
+            gameState.errorsCount++;
+            gameState.hasMistakeOnCurrentQuestion = true;
+            playTone('error');
+            if (btnEl) {
+                btnEl.classList.add('shake', 'border-rose-500', 'bg-rose-50', 'opacity-60');
+                btnEl.disabled = true;
+            }
+            showFeedback(customMsg, false);
+        }
+
+        function handleCorrectQuestion(btnEl, successMsg = "Bravo ! Bonne réponse !") {
+            gameState.isAnswering = true;
+            // La question n'est comptée comme réussie que s'il n'y a eu AUCUNE erreur avant
+            if (!gameState.hasMistakeOnCurrentQuestion) {
+                gameState.currentScore++;
+            }
+            playTone('success');
+            if (btnEl) {
+                btnEl.classList.remove('border-slate-200', 'border-indigo-200', 'border-cyan-200', 'border-purple-200');
+                btnEl.classList.add('border-emerald-500', 'bg-emerald-100', 'scale-105');
+            }
+            showFeedback(
+                gameState.hasMistakeOnCurrentQuestion
+                    ? "Trouvé ! (Attention : l'erreur compte dans les étoiles)"
+                    : successMsg,
+                true
+            );
+            setTimeout(() => {
+                nextQuestion();
+            }, 1050);
+        }
+
+        function checkPhonoCountAnswer(chosenCount, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            if (chosenCount === target.count) {
+                handleCorrectQuestion(btnEl, `Bravo ! « ${target.oralSplit} » = ${target.count} syllabe(s) orale(s) !`);
+            } else {
+                handleWrongAttempt(btnEl, `Écoute bien « ${target.word} » et frappe les syllabes orales !`);
+            }
+        }
+
+        function checkPhonemeAnswer(chosenId, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            const chosenObj = PHONEMES.find(p => p.id === chosenId);
+
+            // Autorise également les graphèmes équivalents produisant exactement le même phonème (ex: c/qu, f/ph, s/ce, an/en, è/ai, é/er, o/au, g/gu)
+            const isExactMatch = chosenId === target.id;
+            const isSamePhoneme = chosenObj && target && chosenObj.tts === target.tts;
+
+            if (isExactMatch) {
+                handleCorrectQuestion(btnEl, `Bravo ! C'est bien le son « ${target.grapheme} » !`);
+            } else if (isSamePhoneme) {
+                handleCorrectQuestion(btnEl, `Bravo ! « ${chosenObj.grapheme} » fait bien le même son que « ${target.grapheme} » !`);
+            } else {
+                handleWrongAttempt(btnEl, "Ce n'est pas ce son. Réécoute et regarde le geste !");
+            }
+        }
+
+        function checkSyllableAnswer(chosenSyl, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            if (chosenSyl === target.text) {
+                handleCorrectQuestion(btnEl, `Super ! Tu as lu « ${target.text} » !`);
+            } else {
+                handleWrongAttempt(btnEl, `Non, ça c'est « ${chosenSyl} ». Réécoute bien !`);
+            }
+        }
+
+        function selectWordSyllable(syl, poolIdx, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            const expectedSyl = target.syllables[gameState.builtSyllables.length];
+
+            if (syl === expectedSyl) {
+                playTone('success');
+                const slotEl = document.getElementById(`slot-${gameState.builtSyllables.length}`);
+                if (slotEl) {
+                    slotEl.textContent = syl;
+                    slotEl.classList.remove('border-dashed', 'border-slate-300', 'bg-slate-50', 'text-slate-400');
+                    slotEl.classList.add('border-emerald-500', 'bg-emerald-100', 'text-emerald-900');
+                }
+                btnEl.disabled = true;
+                btnEl.classList.add('opacity-40', 'scale-95');
+                gameState.builtSyllables.push(syl);
+
+                if (gameState.builtSyllables.length === target.syllables.length) {
+                    handleCorrectQuestion(null, `Génial ! Tu as écrit « ${target.word} » !`);
+                }
+            } else {
+                handleWrongAttempt(btnEl, `Ce n'est pas la bonne syllabe pour continuer « ${target.word} ».`);
+            }
+        }
+
+        function resetWordBuild() {
+            if (gameState.isAnswering) return;
+            gameState.builtSyllables = [];
+            renderQuestion();
+        }
+
+        function checkSightWordAnswer(chosenWord, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            if (chosenWord === target.word) {
+                handleCorrectQuestion(btnEl, `Bravo ! Tu as reconnu le mot-outil « ${target.word} » !`);
+            } else {
+                handleWrongAttempt(btnEl, `Non, ce mot se lit « ${chosenWord} ». Réécoute !`);
+            }
+        }
+
+        function checkSentenceAnswer(chosenLabel, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            if (chosenLabel === target.correct.label) {
+                handleCorrectQuestion(btnEl, "Bravo ! Tu as bien compris la phrase !");
+            } else {
+                handleWrongAttempt(btnEl, "Relis bien chaque mot de la phrase et regarde les dessins !");
+            }
+        }
+
+        function checkDysSpecialAnswer(chosenOpt, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            if (chosenOpt === target.grapheme) {
+                handleCorrectQuestion(btnEl, `Bravo ! ${target.tip}`);
+            } else {
+                handleWrongAttempt(btnEl, `Attention ! Indice : ${target.tip}`);
+            }
+        }
+
+        function checkIntruderAnswer(isIntruder, word, btnEl) {
+            if (gameState.isAnswering) return;
+            const set = gameState.currentQuestion.target;
+            if (isIntruder) {
+                handleCorrectQuestion(btnEl, `Bravo ! « ${word} » ne commence pas par ${set.soundLabel} !`);
+            } else {
+                speak(word, 0.85);
+                handleWrongAttempt(btnEl, `Non, « ${word} » commence bien par ${set.soundLabel}. Cherche celui qui est différent !`);
+            }
+        }
+
+        function selectTrainWord(word, poolIdx, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            const expectedWord = target.words[gameState.builtWords.length];
+
+            if (word === expectedWord) {
+                playTone('success');
+                speak(word, 0.9);
+                const slotEl = document.getElementById(`train-slot-${gameState.builtWords.length}`);
+                if (slotEl) {
+                    slotEl.textContent = word;
+                    slotEl.classList.remove('border-dashed', 'border-sky-300', 'bg-white', 'text-slate-400');
+                    slotEl.classList.add('border-emerald-500', 'bg-emerald-100', 'text-emerald-900');
+                }
+                btnEl.disabled = true;
+                btnEl.classList.add('opacity-40', 'scale-95');
+                gameState.builtWords.push(word);
+
+                if (gameState.builtWords.length === target.words.length) {
+                    handleCorrectQuestion(null, `Super ! Tu as formé la phrase : « ${target.full} » !`);
+                }
+            } else {
+                handleWrongAttempt(btnEl, "Ce n'est pas ce mot qui vient à cette place dans le train !");
+            }
+        }
+
+        function resetSentenceTrain() {
+            if (gameState.isAnswering) return;
+            gameState.builtWords = [];
+            renderQuestion();
+        }
+
+        function checkMagicWordAnswer(chosenLabel, btnEl) {
+            if (gameState.isAnswering) return;
+            const target = gameState.currentQuestion.target;
+            if (chosenLabel === target.word) {
+                handleCorrectQuestion(btnEl, `Bravo ! Tu as lu tout seul le mot « ${target.word} » !`);
+            } else {
+                handleWrongAttempt(btnEl, `Non, ça c'est « ${chosenLabel} ». Relis bien chaque syllabe du mot magique !`);
+            }
+        }
+
+        function formatSentenceWithSyllables(sentenceObj) {
+            if (!gameState.dysModeActive || !sentenceObj.syllabified) {
+                return escapeHtml(sentenceObj.sentence);
+            }
+            return sentenceObj.syllabified.map(wordSyls =>
+                wordSyls.map((s, idx) => `<span class="syl-alt-${idx % 2}">${escapeHtml(s)}</span>`).join('')
+            ).join(' ');
+        }
+
+        function showContextualHelp() {
+            const q = gameState.currentQuestion;
+            if (!q) return;
+            const tip = q.helpTip || q.prompt;
+            showToast(`💡 ${tip}`, 'bg-amber-600');
+            speak(tip, 0.95);
+        }
+
+        function renderLevelComplete() {
+            const total = gameState.totalSteps;
+            const firstTrySuccess = gameState.currentScore;
+            const errors = gameState.errorsCount;
+            const ratio = total > 0 ? (firstTrySuccess / total) : 0;
+
+            let starsEarned = 0;
+            if (firstTrySuccess === 0) {
+                starsEarned = 0;
+            } else if (errors === 0) {
+                starsEarned = 3;
+            } else if (ratio >= 0.7) {
+                starsEarned = 2;
+            } else {
+                starsEarned = 1;
+            }
+
+            const profile = getActiveProfile();
+            let unlockedNext = false;
+            let earnedLevelObj = null;
+            let isNewBadge = false;
+
+            if (profile) {
+                if (!Array.isArray(profile.badges)) profile.badges = [];
+                profile.stars = (profile.stars || 0) + starsEarned;
+                if (gameState.currentLevelId) {
+                    const prevBest = profile.levelStars[gameState.currentLevelId] || 0;
+                    if (starsEarned > prevBest) {
+                        profile.levelStars[gameState.currentLevelId] = starsEarned;
+                    }
+                    if (starsEarned >= 2) {
+                        earnedLevelObj = LEVELS.find(l => l.id === gameState.currentLevelId) || null;
+                        if (earnedLevelObj && !profile.badges.includes(earnedLevelObj.id)) {
+                            profile.badges.push(earnedLevelObj.id);
+                            isNewBadge = true;
+                        }
+                        if (gameState.currentLevelId >= (profile.unlockedLevel || 1) && gameState.currentLevelId < LEVELS.length) {
+                            profile.unlockedLevel = gameState.currentLevelId + 1;
+                            unlockedNext = true;
+                        }
+                    }
+                }
+                saveAppData();
+                updateHeaderUI();
+            }
+
+            if (starsEarned >= 2) {
+                playTone('victory');
+                playApplause();
+            }
+
+            const starsVisual = '⭐'.repeat(starsEarned) + '☆'.repeat(3 - starsEarned);
+            const titleMsg = starsEarned === 3
+                ? 'Parfait ! Zéro erreur !'
+                : starsEarned === 2
+                    ? 'Bravo ! Étape validée !'
+                    : 'Encore un petit effort !';
+
+            const scorePhrase = `${firstTrySuccess} ${firstTrySuccess > 1 ? 'bonnes réponses' : 'bonne réponse'} sur ${total}`;
+            const badgeVoicePart = earnedLevelObj
+                ? (isNewBadge ? ` Félicitations, tu remportes le nouveau badge ${earnedLevelObj.badgeName} !` : ` Tu conserves ton badge ${earnedLevelObj.badgeName} !`)
+                : '';
+            const subMsg = starsEarned >= 2
+                ? (unlockedNext ? `Tu as obtenu ${scorePhrase} et débloqué l'étape ${gameState.currentLevelId + 1} !` : `Tu as obtenu ${scorePhrase} du premier coup.`)
+                : `Tu as obtenu ${scorePhrase}. Il faut au moins 2 étoiles (70 % sans erreur au 1er essai) pour passer à l'étape suivante.`;
+
+            const badgeShowcaseHtml = earnedLevelObj ? `
+                <div class="relative bg-gradient-to-b from-amber-100 via-yellow-50 to-amber-100 border-4 border-amber-400 rounded-3xl p-5 shadow-lg pop-in">
+                    <div class="text-xs font-extrabold uppercase tracking-wider text-amber-700 mb-1">
+                        ${isNewBadge ? '🎉 Nouveau Badge Débloqué ! 🎉' : '🏅 Badge de l’étape'}
+                    </div>
+                    <div class="w-24 h-24 mx-auto rounded-full bg-white border-4 border-amber-400 shadow-inner flex items-center justify-center text-6xl animate-bounce-gentle my-2">
+                        ${earnedLevelObj.badgeIcon}
+                    </div>
+                    <div class="font-title text-2xl font-bold text-amber-900">${earnedLevelObj.badgeName}</div>
+                    <button type="button" onclick="playApplause()" class="mt-2 inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white font-title font-bold text-xs px-3.5 py-1.5 rounded-full btn-game">
+                        👏 Réécouter les applaudissements
+                    </button>
+                </div>
+            ` : '';
+
+            const container = document.getElementById('app-container');
+            container.innerHTML = `
+                <div class="bg-white/95 rounded-3xl p-7 sm:p-8 border-4 ${starsEarned >= 2 ? 'border-emerald-400' : 'border-amber-400'} shadow-2xl text-center space-y-5 max-w-lg mx-auto pop-in">
+                    <div class="text-5xl tracking-widest">${starsVisual}</div>
+                    <h2 class="font-title text-3xl font-bold text-slate-800">${titleMsg}</h2>
+                    ${badgeShowcaseHtml}
+                    <p class="text-sm font-bold text-slate-600">${subMsg}</p>
+                    <div class="bg-slate-50 rounded-2xl p-3 text-xs font-bold text-slate-500">
+                        Résultat : ${scorePhrase} • Erreurs : ${errors}
+                    </div>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="goHome()" class="flex-1 py-3.5 bg-slate-200 hover:bg-slate-300 text-slate-800 font-title font-bold rounded-2xl btn-game">
+                            🗺️ Accueil
+                        </button>
+                        ${unlockedNext ? `
+                            <button onclick="startLevel(${gameState.currentLevelId + 1})" class="flex-1 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-title font-bold rounded-2xl btn-game">
+                                Étape ${gameState.currentLevelId + 1} →
+                            </button>
+                        ` : `
+                            <button onclick="${gameState.currentLevelId ? `startLevel(${gameState.currentLevelId})` : gameState.activePeriodId ? `startPeriodTraining('${gameState.activePeriodId}')` : gameState.isDysSpecialMode ? 'startDysSpecialTraining()' : 'launchCustomTeacherSession()'}" class="flex-1 py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-title font-bold rounded-2xl btn-game">
+                                🔄 Recommencer
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                speak(`${titleMsg}${badgeVoicePart} ${subMsg}`, 0.95);
+            }, starsEarned >= 2 ? 700 : 100);
+        }
+
+        function stopFluencyTimer() {
+            if (gameState.fluencyTimer) {
+                clearInterval(gameState.fluencyTimer);
+                gameState.fluencyTimer = null;
+            }
+        }
+
+        function startFluencyChallenge() {
+            stopFluencyTimer();
+            gameState.currentLevelId = null;
+            gameState.activePeriodId = null;
+            gameState.isCustomTeacherMode = false;
+            gameState.isDysSpecialMode = false;
+            gameState.fluencySecondsLeft = 60;
+            gameState.fluencyReadCount = 0;
+            gameState.usedQuestionKeys = [];
+            gameState.fluencyCurrentWord = pickUnique(FLUENCY_WORDS, w => 'flu_' + w);
+            renderFluencyScreen();
+
+            gameState.fluencyTimer = setInterval(() => {
+                gameState.fluencySecondsLeft--;
+                const timerEl = document.getElementById('fluency-timer-display');
+                if (timerEl) timerEl.textContent = `${gameState.fluencySecondsLeft} s`;
+                if (gameState.fluencySecondsLeft <= 0) {
+                    stopFluencyTimer();
+                    renderFluencyResult();
+                }
+            }, 1000);
+        }
+
+        function renderFluencyScreen() {
+            const container = document.getElementById('app-container');
+            container.innerHTML = `
+                <div class="bg-white/95 rounded-3xl p-6 sm:p-8 border-4 border-rose-300 shadow-xl text-center space-y-6 max-w-xl mx-auto pop-in">
+                    <div class="flex items-center justify-between">
+                        <button onclick="goHome()" class="px-3.5 py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 font-bold text-sm text-slate-600">← Arrêter</button>
+                        <div class="bg-rose-100 border-2 border-rose-300 px-4 py-1.5 rounded-full font-title font-bold text-rose-700 text-lg">
+                            ⏱️ <span id="fluency-timer-display">${gameState.fluencySecondsLeft} s</span>
+                        </div>
+                        <div class="bg-emerald-100 border-2 border-emerald-300 px-4 py-1.5 rounded-full font-title font-bold text-emerald-700 text-lg">
+                            ✅ <span id="fluency-count-display">${gameState.fluencyReadCount}</span>
+                        </div>
+                    </div>
+
+                    <p class="text-sm font-bold text-slate-600">Lis le mot à voix haute puis valide :</p>
+
+                    <div class="bg-amber-50 border-4 border-amber-300 rounded-3xl py-10 px-6">
+                        <div id="fluency-word-box" class="font-title font-bold text-5xl sm:text-6xl text-slate-800">
+                            ${gameState.fluencyCurrentWord}
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 justify-center">
+                        <button onclick="speak(gameState.fluencyCurrentWord, 0.85)" class="px-5 py-4 rounded-2xl bg-sky-100 hover:bg-sky-200 text-sky-800 font-title font-bold btn-game">
+                            🔊 Aide vocale
+                        </button>
+                        <button onclick="nextFluencyWord()" class="flex-grow py-4 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-title font-bold text-2xl btn-game">
+                            Mot lu ! Suivant →
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function nextFluencyWord() {
+            gameState.fluencyReadCount++;
+            const nextW = pickUnique(FLUENCY_WORDS, w => 'flu_' + w);
+            gameState.fluencyCurrentWord = nextW;
+
+            const wordEl = document.getElementById('fluency-word-box');
+            const countEl = document.getElementById('fluency-count-display');
+            if (wordEl) wordEl.textContent = nextW;
+            if (countEl) countEl.textContent = gameState.fluencyReadCount;
+        }
+
+        function renderFluencyResult() {
+            playTone('victory');
+            const count = gameState.fluencyReadCount;
+            const profile = getActiveProfile();
+            if (profile && count > 0) {
+                profile.stars = (profile.stars || 0) + (count >= 30 ? 3 : count >= 15 ? 2 : 1);
+                saveAppData();
+                updateHeaderUI();
+            }
+
+            let levelMsg = 'Bon début ! Continue à t’entraîner pour lire de plus en plus vite.';
+            if (count >= 50) levelMsg = 'Score d’expert fin de CP (objectif Éducation nationale de 50 mots/min atteint) !';
+            else if (count >= 30) levelMsg = 'Très belle fluidité de lecture !';
+
+            const container = document.getElementById('app-container');
+            container.innerHTML = `
+                <div class="bg-white/95 rounded-3xl p-8 border-4 border-rose-400 shadow-2xl text-center space-y-5 max-w-lg mx-auto pop-in">
+                    <div class="text-6xl">⏱️🏆</div>
+                    <h2 class="font-title text-3xl font-bold text-rose-600">Temps écoulé !</h2>
+                    <div class="font-title text-5xl font-bold text-slate-800">${count} mots lus</div>
+                    <p class="text-sm font-bold text-slate-600">${levelMsg}</p>
+                    <div class="flex gap-3 pt-2">
+                        <button onclick="goHome()" class="flex-1 py-3.5 bg-slate-200 hover:bg-slate-300 text-slate-800 font-title font-bold rounded-2xl btn-game">
+                            🗺️ Accueil
+                        </button>
+                        <button onclick="startFluencyChallenge()" class="flex-1 py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-title font-bold rounded-2xl btn-game">
+                            🔄 Rejouer
+                        </button>
+                    </div>
+                </div>
+            `;
+            speak(`Bravo ! Tu as lu ${count} mots en une minute !`);
+        }
+
+        /**
+         * ESPACE ADMINISTRATEUR / ENSEIGNANT
+         */
+        function openAdminModal() {
+            const modal = document.getElementById('admin-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            const prof = getActiveProfile();
+            document.getElementById('admin-active-student-label').textContent = prof
+                ? `Élève actif : ${prof.avatar} ${prof.name} (Étape ${prof.unlockedLevel || 1}/${LEVELS.length})`
+                : 'Aucun élève sélectionné';
+            renderAdminLevelsTab();
+            renderAdminCustomTab();
+            renderAdminAudioTab();
+        }
+
+        function closeAdminModal() {
+            const modal = document.getElementById('admin-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function switchAdminTab(tabName) {
+            ['levels', 'custom', 'audio'].forEach(t => {
+                document.getElementById(`admin-tab-${t}`).classList.toggle('hidden', t !== tabName);
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (t === tabName) {
+                    btn.classList.add('bg-white', 'text-slate-800', 'shadow');
+                    btn.classList.remove('text-slate-600');
+                } else {
+                    btn.classList.remove('bg-white', 'text-slate-800', 'shadow');
+                    btn.classList.add('text-slate-600');
+                }
+            });
+        }
+
+        function renderAdminLevelsTab() {
+            const prof = getActiveProfile();
+            const unlocked = prof ? (prof.unlockedLevel || 1) : 1;
+            const listEl = document.getElementById('admin-levels-list');
+            listEl.innerHTML = LEVELS.map(lvl => {
+                const isOpen = lvl.id <= unlocked;
+                return `
+                    <div class="p-3 rounded-2xl border-2 ${isOpen ? 'border-emerald-300 bg-emerald-50/60' : 'border-slate-200 bg-slate-50'} flex items-center justify-between gap-2">
+                        <div>
+                            <div class="font-title font-bold text-sm text-slate-800">${lvl.icon} Étape ${lvl.id} : ${lvl.title}</div>
+                            <div class="text-xs text-slate-500">${isOpen ? 'Débloquée' : 'Verrouillée'}</div>
+                        </div>
+                        <button onclick="adminLaunchLevel(${lvl.id})" class="px-3 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold btn-game shrink-0">
+                            Lancer
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function unlockAllLevelsForActiveProfile() {
+            const prof = getActiveProfile();
+            if (!prof) return;
+            prof.unlockedLevel = LEVELS.length;
+            saveAppData();
+            renderAdminLevelsTab();
+            if (!gameState.currentLevelId) renderHomeScreen();
+            showToast('Toutes les étapes sont débloquées !', 'bg-emerald-600');
+        }
+
+        function adminLaunchLevel(levelId) {
+            const prof = getActiveProfile();
+            if (prof && (prof.unlockedLevel || 1) < levelId) {
+                prof.unlockedLevel = levelId;
+                saveAppData();
+            }
+            closeAdminModal();
+            startLevel(levelId);
+        }
+
+        function renderAdminCustomTab() {
+            const grid = document.getElementById('admin-phonemes-grid');
+            grid.innerHTML = PHONEMES.map(p => {
+                const isSelected = gameState.customConfig.selectedIds.includes(p.id);
+                return `
+                    <button type="button" onclick="toggleCustomPhoneme('${p.id}')" class="p-2 rounded-xl border-2 font-title font-bold text-sm transition ${isSelected ? `card-${p.category} ring-2 ring-slate-800 scale-105` : 'border-slate-200 bg-slate-50 text-slate-600'}">
+                        ${p.grapheme}
+                    </button>
+                `;
+            }).join('');
+            document.getElementById('custom-selected-count').textContent = gameState.customConfig.selectedIds.length;
+        }
+
+        function toggleCustomPhoneme(id) {
+            const idx = gameState.customConfig.selectedIds.indexOf(id);
+            if (idx >= 0) {
+                gameState.customConfig.selectedIds.splice(idx, 1);
+            } else {
+                gameState.customConfig.selectedIds.push(id);
+            }
+            renderAdminCustomTab();
+        }
+
+        function selectCustomPreset(preset) {
+            if (preset === 'clear') {
+                gameState.customConfig.selectedIds = [];
+            } else if (['P1', 'P2', 'P3', 'P4', 'P5'].includes(preset)) {
+                const ids = PHONEMES.filter(p => p.period === preset).map(p => p.id);
+                gameState.customConfig.selectedIds = Array.from(new Set([...gameState.customConfig.selectedIds, ...ids]));
+            } else if (preset === 'voyelles') {
+                const ids = PHONEMES.filter(p => p.category === 'voyelle').map(p => p.id);
+                gameState.customConfig.selectedIds = Array.from(new Set([...gameState.customConfig.selectedIds, ...ids]));
+            } else if (preset === 'longues') {
+                const ids = PHONEMES.filter(p => p.category === 'consonne-longue').map(p => p.id);
+                gameState.customConfig.selectedIds = Array.from(new Set([...gameState.customConfig.selectedIds, ...ids]));
+            } else if (preset === 'courtes') {
+                const ids = PHONEMES.filter(p => p.category === 'consonne-courte').map(p => p.id);
+                gameState.customConfig.selectedIds = Array.from(new Set([...gameState.customConfig.selectedIds, ...ids]));
+            } else if (preset === 'complexes') {
+                const ids = PHONEMES.filter(p => p.category === 'complexe').map(p => p.id);
+                gameState.customConfig.selectedIds = Array.from(new Set([...gameState.customConfig.selectedIds, ...ids]));
+            }
+            renderAdminCustomTab();
+        }
+
+        function launchCustomTeacherSession() {
+            if (gameState.customConfig.selectedIds.length < 2) {
+                showToast('Sélectionne au moins 2 lettres ou sons !', 'bg-amber-500');
+                return;
+            }
+            gameState.customConfig.showGesture = document.getElementById('custom-show-gesture').checked;
+            gameState.customConfig.questionsCount = parseInt(document.getElementById('custom-questions-count').value, 10) || 8;
+
+            stopFluencyTimer();
+            gameState.currentLevelId = null;
+            gameState.activePeriodId = null;
+            gameState.isCustomTeacherMode = true;
+            gameState.isDysSpecialMode = false;
+            gameState.currentStep = 0;
+            gameState.totalSteps = gameState.customConfig.questionsCount;
+            gameState.currentScore = 0;
+            gameState.errorsCount = 0;
+            gameState.hasMistakeOnCurrentQuestion = false;
+            gameState.isAnswering = false;
+            gameState.usedQuestionKeys = [];
+            gameState.lastSpokenPrompt = '';
+
+            closeAdminModal();
+            speak("C'est parti pour l'entraînement personnalisé !");
+            nextQuestion();
+        }
+
+        /**
+         * GESTION AUDIO HYBRIDE (MP3 GITHUB / LOCAUX + SYNTHÈSE VOCALE CHROMEBOOK-SAFE)
+         */
+        const localMp3Urls = {};
+        const detectedGithubMp3 = {};
+        let currentAudioSubTab = 'phonemes';
+        let frenchVoice = null;
+        let activeUtteranceRef = null;
+        let fallbackTimerRef = null;
+        let sequenceTimerRef = null;
+        let currentAudioElement = null;
+        let speechSessionToken = 0;
+
+        function getAllGameSyllables() {
+            const set = new Set();
+            SYLLABLES_LONG.forEach(s => set.add(s.text));
+            SYLLABLES_SHORT.forEach(s => set.add(s.text));
+            PERIODS_CP.forEach(per => per.syllables.forEach(s => set.add(s)));
+            return Array.from(set).sort((a, b) => a.localeCompare(b, 'fr'));
+        }
+
+        function getSyllableAudioKey(sylText) {
+            const clean = String(sylText || '').toLowerCase().trim();
+            if (clean === 'ce') return 'se';
+            return clean
+                .replace(/é/g, 'e_aigu')
+                .replace(/è/g, 'e_grave')
+                .replace(/ê/g, 'e_circonflexe')
+                .replace(/œ/g, 'oe')
+                .replace(/[^a-z0-9_]/g, '');
+        }
+
+        function getAudioFileKey(phonemeId) {
+            if (phonemeId === 'é') return 'e_aigu';
+            if (phonemeId === 'è') return 'e_grave';
+            return phonemeId;
+        }
+
+        function getPhonemeFileAliases(phonemeId) {
+            if (phonemeId === 'è') return ['e_grave', 'è', 'e_circonflexe', 'ai'];
+            if (phonemeId === 'é') return ['e_aigu', 'é'];
+            return [getAudioFileKey(phonemeId)];
+        }
+
+        function initFrenchVoice() {
+            if (!('speechSynthesis' in window)) return;
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices.length) return;
+            frenchVoice =
+                voices.find(v => v.lang === 'fr-FR' && (v.name.includes('Google') || v.name.includes('Chrome OS'))) ||
+                voices.find(v => v.lang === 'fr-FR' && (v.name.includes('Amélie') || v.name.includes('Thomas') || v.name.includes('Hortense'))) ||
+                voices.find(v => v.lang.startsWith('fr'));
+        }
+
+        if ('speechSynthesis' in window) {
+            initFrenchVoice();
+            window.speechSynthesis.onvoiceschanged = initFrenchVoice;
+            // Déverrouillage audio ChromeOS dès la première interaction
+            document.addEventListener('pointerdown', () => {
+                if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+            }, { once: true });
+        }
+
+        function speak(text, rate = 0.92, onDoneCallback = null, skipCancel = false) {
+            const currentToken = ++speechSessionToken;
+            if (fallbackTimerRef) {
+                clearTimeout(fallbackTimerRef);
+                fallbackTimerRef = null;
+            }
+            if (sequenceTimerRef) {
+                clearTimeout(sequenceTimerRef);
+                sequenceTimerRef = null;
+            }
+            if (!('speechSynthesis' in window)) {
+                if (onDoneCallback) sequenceTimerRef = setTimeout(onDoneCallback, 500);
+                return;
+            }
+
+            try {
+                if (!skipCancel && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) {
+                    window.speechSynthesis.cancel();
+                }
+                if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+            } catch (e) {}
+
+            // Petit délai après cancel() pour éviter le bug Chrome/ChromeOS qui avale le speak() suivant
+            sequenceTimerRef = setTimeout(() => {
+                if (currentToken !== speechSessionToken) return;
+
+                const utter = new SpeechSynthesisUtterance(text);
+                activeUtteranceRef = utter;
+                utter.lang = 'fr-FR';
+                if (!frenchVoice) initFrenchVoice();
+                if (frenchVoice) utter.voice = frenchVoice;
+                utter.rate = rate;
+                utter.pitch = 1.05;
+                utter.volume = 1.0;
+
+                let callbackCalled = false;
+                const safeFinish = () => {
+                    if (callbackCalled) return;
+                    callbackCalled = true;
+                    if (fallbackTimerRef) clearTimeout(fallbackTimerRef);
+                    if (currentToken === speechSessionToken && onDoneCallback) {
+                        onDoneCallback();
+                    }
+                };
+
+                utter.onend = safeFinish;
+                utter.onerror = safeFinish;
+
+                // Sécurité ChromeOS si onend ne se déclenche pas
+                const estimatedMs = Math.max(1300, text.length * 72);
+                fallbackTimerRef = setTimeout(safeFinish, estimatedMs);
+
+                try {
+                    window.speechSynthesis.speak(utter);
+                } catch (e) {
+                    safeFinish();
+                }
+            }, skipCancel ? 10 : 75);
+        }
+
+        function tryPlaySources(sources, onAllFailed) {
+            if (!sources || sources.length === 0) {
+                onAllFailed();
+                return;
+            }
+            const [currentSrc, ...remaining] = sources;
+            try {
+                if (currentAudioElement) {
+                    currentAudioElement.pause();
+                    currentAudioElement = null;
+                }
+                const audio = new Audio(currentSrc);
+                audio.preload = 'auto';
+                currentAudioElement = audio;
+
+                let handled = false;
+                const failOver = () => {
+                    if (handled) return;
+                    handled = true;
+                    tryPlaySources(remaining, onAllFailed);
+                };
+
+                audio.onerror = failOver;
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(failOver);
+                }
+            } catch (e) {
+                tryPlaySources(remaining, onAllFailed);
+            }
+        }
+
+        function speakPhoneme(phonemeObj, preserveSession = false) {
+            if (!phonemeObj) return;
+            if (!preserveSession) {
+                speechSessionToken++;
+            }
+            const aliases = getPhonemeFileAliases(phonemeObj.id);
+            const candidates = [];
+
+            aliases.forEach(alias => {
+                if (localMp3Urls[alias]) {
+                    candidates.push(localMp3Urls[alias]);
+                }
+            });
+            // Teste les chemins relatifs standards et variantes de casse sur GitHub Pages
+            aliases.forEach(alias => {
+                candidates.push(`audio/${alias}.mp3`);
+                candidates.push(`./audio/${alias}.mp3`);
+                candidates.push(`audio/${alias.toUpperCase()}.mp3`);
+                candidates.push(`audio/${alias}.MP3`);
+            });
+
+            tryPlaySources(candidates, () => {
+                speak(phonemeObj.tts, 0.82, null, true);
+            });
+        }
+
+        function speakThenPhoneme(promptText, phonemeObj) {
+            speak(promptText, 0.95, () => {
+                sequenceTimerRef = setTimeout(() => {
+                    speakPhoneme(phonemeObj, true);
+                }, 140);
+            });
+        }
+
+        function speakThenText(promptText, secondText) {
+            speak(promptText, 0.95, () => {
+                sequenceTimerRef = setTimeout(() => {
+                    speak(secondText, 0.85, null, true);
+                }, 160);
+            });
+        }
+
+        function speakSyllable(sylText, ttsFallback = null, preserveSession = false) {
+            if (!sylText) return;
+            if (!preserveSession) {
+                speechSessionToken++;
+            }
+            const key = getSyllableAudioKey(sylText);
+            const rawLower = String(sylText).toLowerCase().trim();
+            const candidates = [];
+
+            if (localMp3Urls[key]) candidates.push(localMp3Urls[key]);
+            if (localMp3Urls[rawLower]) candidates.push(localMp3Urls[rawLower]);
+
+            candidates.push(`audio/${key}.mp3`);
+            candidates.push(`./audio/${key}.mp3`);
+            if (rawLower !== key) {
+                candidates.push(`audio/${rawLower}.mp3`);
+            }
+            candidates.push(`audio/${key.toUpperCase()}.mp3`);
+
+            const fallbackText = ttsFallback || sylText;
+            tryPlaySources(candidates, () => {
+                speak(fallbackText, 0.82, null, true);
+            });
+        }
+
+        function speakThenSyllable(promptText, sylText, ttsFallback = null) {
+            speak(promptText, 0.95, () => {
+                sequenceTimerRef = setTimeout(() => {
+                    speakSyllable(sylText, ttsFallback, true);
+                }, 140);
+            });
+        }
+
+        function switchAudioSubTab(subTab) {
+            currentAudioSubTab = subTab;
+            const btnPh = document.getElementById('audio-subtab-phonemes');
+            const btnSy = document.getElementById('audio-subtab-syllables');
+            if (btnPh && btnSy) {
+                if (subTab === 'phonemes') {
+                    btnPh.classList.add('bg-white', 'text-slate-800', 'shadow');
+                    btnPh.classList.remove('text-slate-600');
+                    btnSy.classList.remove('bg-white', 'text-slate-800', 'shadow');
+                    btnSy.classList.add('text-slate-600');
+                } else {
+                    btnSy.classList.add('bg-white', 'text-slate-800', 'shadow');
+                    btnSy.classList.remove('text-slate-600');
+                    btnPh.classList.remove('bg-white', 'text-slate-800', 'shadow');
+                    btnPh.classList.add('text-slate-600');
+                }
+            }
+            renderAdminAudioTab();
+        }
+
+        function handleLocalMp3Upload(event) {
+            const files = Array.from(event.target.files || []);
+            let count = 0;
+            files.forEach(file => {
+                const baseName = file.name.replace(/\.[^/.]+$/, '').toLowerCase();
+                localMp3Urls[baseName] = URL.createObjectURL(file);
+                localMp3Urls[getSyllableAudioKey(baseName)] = localMp3Urls[baseName];
+                count++;
+            });
+            renderAdminAudioTab();
+            showToast(`${count} fichier(s) MP3 chargé(s) pour cette session !`, 'bg-emerald-600');
+        }
+
+        async function checkGithubAudioFiles() {
+            const allKeys = new Set([
+                ...PHONEMES.map(p => getAudioFileKey(p.id)),
+                ...getAllGameSyllables().map(s => getSyllableAudioKey(s))
+            ]);
+            await Promise.all(Array.from(allKeys).map(async (key) => {
+                if (localMp3Urls[key]) {
+                    detectedGithubMp3[key] = true;
+                    return;
+                }
+                try {
+                    const res = await fetch(`audio/${key}.mp3`, { method: 'HEAD' });
+                    detectedGithubMp3[key] = res.ok;
+                } catch (e) {
+                    detectedGithubMp3[key] = false;
+                }
+            }));
+            renderAdminAudioTab();
+        }
+
+        function renderAdminAudioTab() {
+            const listEl = document.getElementById('admin-audio-list');
+            if (!listEl) return;
+
+            if (currentAudioSubTab === 'syllables') {
+                const syllables = getAllGameSyllables();
+                listEl.innerHTML = syllables.map(syl => {
+                    const key = getSyllableAudioKey(syl);
+                    const hasLocal = Boolean(localMp3Urls[key] || localMp3Urls[syl.toLowerCase()]);
+                    const hasGithub = Boolean(detectedGithubMp3[key]);
+                    const isReady = hasLocal || hasGithub;
+                    return `
+                        <div class="p-2.5 rounded-xl border ${isReady ? 'border-emerald-400 bg-emerald-50' : 'border-slate-200 bg-slate-50'} flex items-center justify-between gap-2">
+                            <div class="truncate">
+                                <span class="font-title font-bold text-base text-indigo-900">${syl}</span>
+                                <span class="block text-[11px] text-slate-500 font-mono">${key}.mp3</span>
+                                <span class="block text-[10px] font-bold ${isReady ? 'text-emerald-700' : 'text-amber-700'}">
+                                    ${hasLocal ? '✅ Local chargé' : hasGithub ? '✅ GitHub détecté' : '⚠️ Voix auto'}
+                                </span>
+                            </div>
+                            <button onclick="speakSyllable('${syl.replace(/'/g, "\\'")}')" class="px-2.5 py-1 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-bold shrink-0">
+                                ▶ Tester
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+                return;
+            }
+
+            listEl.innerHTML = PHONEMES.map(p => {
+                const key = getAudioFileKey(p.id);
+                const hasLocal = Boolean(localMp3Urls[key]);
+                const hasGithub = Boolean(detectedGithubMp3[key]);
+                const isReady = hasLocal || hasGithub;
+                return `
+                    <div class="p-2.5 rounded-xl border ${isReady ? 'border-emerald-400 bg-emerald-50' : 'border-slate-200 bg-slate-50'} flex items-center justify-between gap-2">
+                        <div class="truncate">
+                            <span class="font-title font-bold text-sm text-slate-800">${p.grapheme}</span>
+                            <span class="block text-[11px] text-slate-500 font-mono">${key}.mp3</span>
+                            <span class="block text-[10px] font-bold ${isReady ? 'text-emerald-700' : 'text-amber-700'}">
+                                ${hasLocal ? '✅ Local chargé' : hasGithub ? '✅ GitHub détecté' : '⚠️ Voix auto'}
+                            </span>
+                        </div>
+                        <button onclick="speakPhoneme(PHONEMES.find(x => x.id === '${p.id}'))" class="px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold shrink-0">
+                            ▶ Tester
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /**
+         * EFFETS SONORES (WEB AUDIO), MODALES, DYSLEXIE & PWA
+         */
+        let audioCtx = null;
+        function playTone(type) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+
+                if (type === 'success') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.1);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'error') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(130, now + 0.22);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'victory') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.12);
+                    osc.frequency.setValueAtTime(783.99, now + 0.24);
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                }
+            } catch (e) {}
+        }
+
+        /**
+         * SYNTHÈSE D'APPLAUDISSEMENTS RÉALISTES (WEB AUDIO API)
+         */
+        function playApplause() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const duration = 2.1;
+                const clapCount = 26;
+
+                for (let i = 0; i < clapCount; i++) {
+                    const startOffset = (i / clapCount) * 1.45 + Math.random() * 0.14;
+                    const clapTime = audioCtx.currentTime + startOffset;
+                    const clapLen = 0.065 + Math.random() * 0.03;
+
+                    const bufferSize = Math.floor(audioCtx.sampleRate * clapLen);
+                    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const output = noiseBuffer.getChannelData(0);
+                    for (let j = 0; j < bufferSize; j++) {
+                        output[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufferSize * 0.35));
+                    }
+
+                    const whiteNoise = audioCtx.createBufferSource();
+                    whiteNoise.buffer = noiseBuffer;
+
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.value = 950 + Math.random() * 900;
+                    filter.Q.value = 1.2;
+
+                    const gain = audioCtx.createGain();
+                    const envelopeFactor = Math.sin((i / clapCount) * Math.PI);
+                    const peak = (0.12 + Math.random() * 0.08) * (0.45 + 0.55 * envelopeFactor);
+                    gain.gain.setValueAtTime(peak, clapTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, clapTime + clapLen);
+
+                    whiteNoise.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    whiteNoise.start(clapTime);
+                    whiteNoise.stop(clapTime + clapLen);
+                }
+            } catch (e) {}
+        }
+
+        let toastTimeout = null;
+        function showToast(message, bgClass) {
+            const toast = document.getElementById('toast-feedback');
+            const content = document.getElementById('toast-content');
+            content.className = `px-6 py-3 rounded-2xl shadow-xl font-title text-base sm:text-lg font-bold text-white flex items-center gap-3 ${bgClass}`;
+            content.textContent = message;
+            toast.classList.remove('opacity-0', 'translate-y-4');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+            }, 2600);
+        }
+
+        function toggleDysMode() {
+            gameState.dysModeActive = !gameState.dysModeActive;
+            document.body.classList.toggle('dys-mode', gameState.dysModeActive);
+            const btn = document.getElementById('dys-toggle-btn');
+            if (gameState.dysModeActive) {
+                btn.classList.add('bg-purple-600', 'text-white', 'border-purple-800');
+                btn.classList.remove('bg-purple-100', 'text-purple-800');
+                showToast('Mode Aide Dys activé (police Andika + syllabes colorées)', 'bg-purple-600');
+            } else {
+                btn.classList.remove('bg-purple-600', 'text-white', 'border-purple-800');
+                btn.classList.add('bg-purple-100', 'text-purple-800');
+                showToast('Mode Aide Dys désactivé', 'bg-slate-600');
+            }
+            if (gameState.currentQuestion) renderQuestion();
+        }
+
+        function toggleTooltip(el) {
+            const wrapper = el.closest('.tooltip-wrapper');
+            if (!wrapper) return;
+            const wasOpen = wrapper.classList.contains('tooltip-open');
+            document.querySelectorAll('.tooltip-wrapper.tooltip-open').forEach(w => w.classList.remove('tooltip-open'));
+            if (!wasOpen) {
+                wrapper.classList.add('tooltip-open');
+                const bubbleText = wrapper.querySelector('.tooltip-bubble')?.textContent?.trim();
+                if (bubbleText) speak(bubbleText, 0.95);
+            }
+        }
+
+        function openGuideModal() {
+            const modal = document.getElementById('guide-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeGuideModal() {
+            const modal = document.getElementById('guide-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function openHelpModal() {
+            const modal = document.getElementById('help-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeHelpModal() {
+            const modal = document.getElementById('help-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function pickRandom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, m => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[m]));
+        }
+
+        let deferredPwaPrompt = null;
+
+        function setupPwaSupport() {
+            try {
+                const faviconEl = document.getElementById('app-favicon');
+                const appleIconEl = document.getElementById('apple-touch-icon');
+                const manifestEl = document.getElementById('pwa-manifest');
+                const iconUrl = faviconEl ? faviconEl.href : '';
+
+                if (appleIconEl && iconUrl) {
+                    appleIconEl.href = iconUrl;
+                }
+
+                if (manifestEl) {
+                    const manifestObj = {
+                        name: 'Cali-Lecture CP',
+                        short_name: 'Cali-Lecture',
+                        start_url: '.',
+                        display: 'standalone',
+                        background_color: '#e0f2fe',
+                        theme_color: '#0284c7',
+                        icons: iconUrl ? [{
+                            src: iconUrl,
+                            sizes: '512x512',
+                            type: 'image/svg+xml',
+                            purpose: 'any maskable'
+                        }] : []
+                    };
+                    const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+                    manifestEl.href = URL.createObjectURL(manifestBlob);
+                }
+            } catch (e) {
+                console.warn('PWA setup fallback:', e);
+            }
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            const btn = document.getElementById('install-pwa-btn');
+            if (btn) {
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            }
+        });
+
+        function triggerPwaInstall() {
+            if (!deferredPwaPrompt) return;
+            deferredPwaPrompt.prompt();
+            deferredPwaPrompt.userChoice.finally(() => {
+                deferredPwaPrompt = null;
+                const btn = document.getElementById('install-pwa-btn');
+                if (btn) btn.classList.add('hidden');
+            });
+        }
+
+        // Initialisation au chargement
+        window.addEventListener('DOMContentLoaded', () => {
+            setupPwaSupport();
+            loadAppData();
+            goHome();
+        });
+    </script>
+</body>
+</html>
